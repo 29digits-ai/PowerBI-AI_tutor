@@ -1117,6 +1117,7 @@
               MAIN WORKSPACE BODY:
               [Far-Left View Rail] + [Central Canvas / Grid / Model] + [Right Panes]
              ================================================================ */}
+          <div className="flex-1 flex min-h-0 relative overflow-hidden">
             {/* 1. FAR-LEFT VIEW RAIL (Report | Table | Model | Power Query | DAX Query) */}
             <div className="w-11 bg-[#f3f2f1] border-r border-slate-300 flex flex-col items-center py-2 gap-2 shrink-0 z-10">
               {[
@@ -2769,6 +2770,61 @@
           });
           setIsThinkingStatus(null);
         }, 350);
+      };
+
+      // Auto-complete the current Power BI workspace step from anywhere in App
+      const handleAutoPerformCurrentTask = () => {
+        const ds = WORKSPACE_DATASETS[activeCourse.datasetKey] || WORKSPACE_DATASETS.faro;
+        const factTable = ds.tables[0];
+        const dimTable = ds.tables[1];
+        const task = currentStage?.requiredTask;
+
+        if (task === 'load_fact') {
+          setPbiState((prev) => ({
+            ...prev,
+            loadedTables: Array.from(new Set([...prev.loadedTables, factTable.name])),
+            activeView: 'table',
+            selectedTableInView: factTable.name
+          }));
+          setVerificationFeedback({ type: 'success', text: currentStage.verificationSuccess });
+          triggerToast(`Loaded ${factTable.name}.csv and opened Table View!`);
+        } else if (task === 'load_dim') {
+          setPbiState((prev) => ({
+            ...prev,
+            loadedTables: Array.from(new Set([...prev.loadedTables, factTable.name, dimTable.name])),
+            selectedTableInView: dimTable.name
+          }));
+          setVerificationFeedback({ type: 'success', text: currentStage.verificationSuccess });
+          triggerToast(`Loaded ${dimTable.name}.csv into the model!`);
+        } else if (task === 'model_relationship') {
+          setPbiState((prev) => ({
+            ...prev,
+            loadedTables: Array.from(new Set([...prev.loadedTables, factTable.name, dimTable.name])),
+            activeView: 'model',
+            relationshipActive: true,
+            relationshipVerified: true
+          }));
+          setVerificationFeedback({ type: 'success', text: currentStage.verificationSuccess });
+          triggerToast(`Verified 1:* relationship on ${ds.joinKey} in Model View!`);
+        } else if (task === 'apply_dax_or_pq') {
+          setPbiState((prev) => ({
+            ...prev,
+            daxMeasureCommitted: true,
+            showFormulaBar: true
+          }));
+          setVerificationFeedback({ type: 'success', text: currentStage.verificationSuccess });
+          triggerToast(`Committed DAX formula: ${activeChapter.daxFormula.split('=')[0]}!`);
+        } else if (task === 'build_visual') {
+          setPbiState((prev) => ({
+            ...prev,
+            loadedTables: Array.from(new Set([...prev.loadedTables, factTable.name, dimTable.name])),
+            activeView: 'report',
+            selectedVisualType: 'card',
+            checkedFields: Array.from(new Set([...prev.checkedFields, ds.kpiMetricField]))
+          }));
+          setVerificationFeedback({ type: 'success', text: currentStage.verificationSuccess });
+          triggerToast(`Created Card visual with ${ds.kpiLabel}!`);
+        }
       };
 
       // Verify Power BI Workspace task (when Continue [1] is clicked on a hands-on stage)
