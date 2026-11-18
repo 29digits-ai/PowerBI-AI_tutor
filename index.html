@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power BI Interactive AI Tutor</title>
+    <title>Power BI Interactive AI Tutor — Beginner to Expert Workspace</title>
     <style>
         :root {
             --pbi-yellow: #F2C811;
@@ -81,7 +81,7 @@
             transition: width 0.5s ease;
         }
 
-        .nav-menu { list-style: none; flex: 1; }
+        .nav-menu { list-style: none; flex: 1; overflow-y: auto; }
         
         .nav-item {
             padding: 12px 15px;
@@ -136,7 +136,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            min-height: 0; /* FIX: Prevents flexbox overflow bug */
+            min-height: 0;
         }
 
         .chat-messages {
@@ -146,7 +146,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            min-height: 0; /* FIX: Allows scrolling inside flex container */
+            min-height: 0;
         }
 
         .message {
@@ -200,6 +200,7 @@
         .btn-primary:hover { background: #005a9e; }
         .btn-yellow { background: var(--pbi-yellow); color: var(--pbi-dark); }
         .btn-outline { background: transparent; border: 2px solid var(--pbi-accent); color: var(--pbi-accent); }
+        .btn-success { background: var(--success); color: white; }
 
         /* Sandbox View */
         .sandbox-grid {
@@ -233,7 +234,7 @@
             resize: none;
             background: #1e1e1e;
             color: #d4d4d4;
-            min-height: 0; /* FIX: Prevents textarea from breaking grid */
+            min-height: 0;
         }
 
         .output-log {
@@ -244,7 +245,7 @@
             padding: 15px;
             font-family: 'Consolas', monospace;
             overflow-y: auto;
-            min-height: 0; /* FIX: Allows scrolling inside flex container */
+            min-height: 0;
         }
 
         .log-entry { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; line-height: 1.4; }
@@ -314,6 +315,152 @@
         }
         
         .confidence-meter input[type=range] { flex: 1; }
+
+        /* Curriculum / Contents View */
+        .curriculum-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .curriculum-header {
+            background: linear-gradient(135deg, var(--pbi-dark), var(--pbi-gray));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .curriculum-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        .curriculum-header p { opacity: 0.85; line-height: 1.5; }
+
+        .level-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--pbi-light);
+        }
+
+        .level-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .level-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-beginner { background: var(--success); }
+        .badge-intermediate { background: var(--pbi-accent); }
+        .badge-advanced { background: #8764b8; }
+        .badge-expert { background: var(--pbi-dark); }
+
+        .level-progress {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .lesson-card {
+            background: var(--pbi-light);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .lesson-card:hover {
+            border-color: var(--pbi-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,120,212,0.15);
+        }
+
+        .lesson-card.completed {
+            background: #dff6dd;
+            border-color: var(--success);
+        }
+
+        .lesson-card.in-progress {
+            border-color: var(--pbi-yellow);
+            background: #fff8dc;
+        }
+
+        .lesson-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .lesson-title {
+            font-weight: 600;
+            color: var(--pbi-dark);
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        .lesson-desc {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .lesson-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .lesson-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-new { background: #e1dfdd; color: #555; }
+        .status-progress { background: var(--pbi-yellow); color: var(--pbi-dark); }
+        .status-done { background: var(--success); color: white; }
+
+        .check-mark {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -335,7 +482,8 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item active" onclick="switchView('chat', this)">💬 Socratic Chat</li>
+            <li class="nav-item active" onclick="switchView('curriculum', this)">📚 Learning Path</li>
+            <li class="nav-item" onclick="switchView('chat', this)">💬 Socratic Chat</li>
             <li class="nav-item" onclick="switchView('sandbox', this)">🛠️ DAX Playground</li>
             <li class="nav-item" onclick="switchView('scenario', this)">🕵️ Troubleshooting Lab</li>
         </ul>
@@ -344,14 +492,72 @@
     <!-- Main Content -->
     <main class="main-content">
         <header class="header">
-            <h1 id="viewTitle">Socratic Learning Chat</h1>
+            <h1 id="viewTitle">Learning Path — Beginner to Expert</h1>
             <button class="btn btn-yellow" onclick="resetProgress()">Reset Progress</button>
         </header>
 
         <div class="workspace">
             
-            <!-- VIEW 1: Socratic Chat -->
-            <div id="view-chat" class="view active">
+            <!-- VIEW 1: Curriculum / Contents -->
+            <div id="view-curriculum" class="view active">
+                <div class="curriculum-container">
+                    <div class="curriculum-header">
+                        <h2>🎓 Your Power BI Journey</h2>
+                        <p>Master Power BI step-by-step with your AI tutor. Each lesson is interactive — the tutor will guide you with questions, hands-on exercises, and real-world scenarios. Click any lesson to start learning.</p>
+                    </div>
+
+                    <!-- BEGINNER -->
+                    <div class="level-section">
+                        <div class="level-header">
+                            <div class="level-title">
+                                <span class="level-badge badge-beginner">BEGINNER</span>
+                                <h3>Foundations & First Reports</h3>
+                            </div>
+                            <div class="level-progress" id="progress-beginner">0 / 6 completed</div>
+                        </div>
+                        <div class="lessons-grid" id="lessons-beginner"></div>
+                    </div>
+
+                    <!-- INTERMEDIATE -->
+                    <div class="level-section">
+                        <div class="level-header">
+                            <div class="level-title">
+                                <span class="level-badge badge-intermediate">INTERMEDIATE</span>
+                                <h3>Data Modeling & DAX</h3>
+                            </div>
+                            <div class="level-progress" id="progress-intermediate">0 / 6 completed</div>
+                        </div>
+                        <div class="lessons-grid" id="lessons-intermediate"></div>
+                    </div>
+
+                    <!-- ADVANCED -->
+                    <div class="level-section">
+                        <div class="level-header">
+                            <div class="level-title">
+                                <span class="level-badge badge-advanced">ADVANCED</span>
+                                <h3>Advanced Analytics & Optimization</h3>
+                            </div>
+                            <div class="level-progress" id="progress-advanced">0 / 6 completed</div>
+                        </div>
+                        <div class="lessons-grid" id="lessons-advanced"></div>
+                    </div>
+
+                    <!-- EXPERT -->
+                    <div class="level-section">
+                        <div class="level-header">
+                            <div class="level-title">
+                                <span class="level-badge badge-expert">EXPERT</span>
+                                <h3>Enterprise & Architecture</h3>
+                            </div>
+                            <div class="level-progress" id="progress-expert">0 / 6 completed</div>
+                        </div>
+                        <div class="lessons-grid" id="lessons-expert"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: Socratic Chat -->
+            <div id="view-chat" class="view">
                 <div class="chat-container">
                     <div class="chat-messages" id="chatMessages">
                         <div class="message ai">
@@ -366,7 +572,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: DAX Sandbox -->
+            <!-- VIEW 3: DAX Sandbox -->
             <div id="view-sandbox" class="view">
                 <div class="sandbox-grid">
                     <div class="panel">
@@ -387,7 +593,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 3: Scenario Lab -->
+            <!-- VIEW 4: Scenario Lab -->
             <div id="view-scenario" class="view">
                 <div class="scenario-card">
                     <h2 id="scenarioTitle" style="margin-bottom: 20px;">🕵️ Scenario 1: The Disappearing Revenue</h2>
@@ -398,3 +604,392 @@
                     <div class="confidence-meter">
                         <label>How confident are you?</label>
                         <input type="range" min="0" max="100" value="50" id="confidenceSlider">
+                        <span id="confidenceValue">50%</span>
+                    </div>
+
+                    <div class="choices" id="scenarioChoices"></div>
+
+                    <div class="feedback-box" id="feedbackBox"></div>
+                    
+                    <div class="scenario-footer" id="scenarioFooter">
+                        <button class="btn btn-primary" onclick="nextScenario()">Next Scenario ➔</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- Curriculum Data ---
+        const curriculum = {
+            beginner: [
+                { id: 'b1', icon: '🚀', title: 'Getting Started with Power BI', desc: 'Install, interface tour, and your first report in 10 minutes.', duration: '15 min', topic: 'power bi basics' },
+                { id: 'b2', icon: '📊', title: 'Importing Your First Data', desc: 'Connect to Excel, CSV, and web sources. Understand Get Data.', duration: '20 min', topic: 'get data power bi' },
+                { id: 'b3', icon: '🔍', title: 'Power Query Essentials', desc: 'Clean, transform, and shape data before it hits the model.', duration: '30 min', topic: 'power query transformations' },
+                { id: 'b4', icon: '🔗', title: 'Tables vs. Measures', desc: 'The fundamental difference that every beginner must grasp.', duration: '20 min', topic: 'tables vs measures' },
+                { id: 'b5', icon: '📈', title: 'Building Your First Visuals', desc: 'Bar charts, cards, and slicers — the building blocks.', duration: '25 min', topic: 'power bi visuals' },
+                { id: 'b6', icon: '🎨', title: 'Formatting & Publishing', desc: 'Make reports beautiful and share them with your team.', duration: '20 min', topic: 'power bi formatting publish' }
+            ],
+            intermediate: [
+                { id: 'i1', icon: '⭐', title: 'Star Schema Design', desc: 'Why facts and dimensions are the backbone of great models.', duration: '35 min', topic: 'star schema power bi' },
+                { id: 'i2', icon: '🔀', title: 'Relationships Deep Dive', desc: '1:many, many:many, active vs. inactive, cross-filter direction.', duration: '40 min', topic: 'power bi relationships' },
+                { id: 'i3', icon: '🧮', title: 'DAX Fundamentals', desc: 'SUM, AVERAGE, COUNT — and the magic of aggregation.', duration: '30 min', topic: 'dax fundamentals' },
+                { id: 'i4', icon: '🎯', title: 'Mastering CALCULATE', desc: 'The most important function in DAX — explained properly.', duration: '45 min', topic: 'calculate dax' },
+                { id: 'i5', icon: '🔄', title: 'Time Intelligence', desc: 'YTD, QTD, Same Period Last Year — the business essentials.', duration: '40 min', topic: 'time intelligence dax' },
+                { id: 'i6', icon: '📅', title: 'Date Tables Done Right', desc: 'Why you need one and how to build a bulletproof version.', duration: '25 min', topic: 'date table power bi' }
+            ],
+            advanced: [
+                { id: 'a1', icon: '🧠', title: 'Context Transition', desc: 'The concept that separates intermediates from experts.', duration: '50 min', topic: 'context transition dax' },
+                { id: 'a2', icon: '🔁', title: 'Iterator Functions', desc: 'SUMX, AVERAGEX, and row-by-row mastery.', duration: '40 min', topic: 'iterator functions dax' },
+                { id: 'a3', icon: '📐', title: 'Virtual Relationships', desc: 'USERELATIONSHIP, TREATAS, and dynamic modeling.', duration: '45 min', topic: 'userelationship treatas' },
+                { id: 'a4', icon: '⚡', title: 'Performance Tuning', desc: 'Query folding, DAX Studio, and VertiPaq analyzer.', duration: '50 min', topic: 'power bi performance' },
+                { id: 'a5', icon: '🎭', title: 'Calculation Groups', desc: 'Write once, apply everywhere — time savings at scale.', duration: '40 min', topic: 'calculation groups' },
+                { id: 'a6', icon: '🔐', title: 'Row-Level Security', desc: 'Dynamic RLS with USERPRINCIPALNAME and user tables.', duration: '35 min', topic: 'row level security' }
+            ],
+            expert: [
+                { id: 'e1', icon: '🏗️', title: 'Enterprise Data Models', desc: 'Composite models, aggregations, and DirectQuery at scale.', duration: '60 min', topic: 'composite models power bi' },
+                { id: 'e2', icon: '🔧', title: 'Tabular Editor & ALM', desc: 'Professional deployment pipelines and source control.', duration: '50 min', topic: 'tabular editor alm' },
+                { id: 'e3', icon: '🤖', title: 'AI Visuals & Copilot', desc: 'Leverage built-in AI, custom visuals, and Microsoft Copilot.', duration: '45 min', topic: 'power bi ai copilot' },
+                { id: 'e4', icon: '🌐', title: 'Power BI Service Architecture', desc: 'Workspaces, apps, gateways, and governance at scale.', duration: '55 min', topic: 'power bi service governance' },
+                { id: 'e5', icon: '📡', title: 'Fabric & OneLake Integration', desc: 'The future of Microsoft analytics — real-world patterns.', duration: '60 min', topic: 'microsoft fabric oneLake' },
+                { id: 'e6', icon: '🏆', title: 'Capstone: End-to-End Solution', desc: 'Build a complete enterprise solution from raw data to app.', duration: '120 min', topic: 'end to end power bi solution' }
+            ]
+        };
+
+        // Track completed lessons
+        let completedLessons = new Set();
+
+        // --- Navigation ---
+        function switchView(viewId, element) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + viewId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            element.classList.add('active');
+
+            const titles = {
+                'curriculum': 'Learning Path — Beginner to Expert',
+                'chat': 'Socratic Learning Chat',
+                'sandbox': 'Interactive DAX Playground',
+                'scenario': 'Troubleshooting Lab'
+            };
+            document.getElementById('viewTitle').innerText = titles[viewId];
+        }
+
+        // --- Render Curriculum ---
+        function renderCurriculum() {
+            Object.keys(curriculum).forEach(level => {
+                const container = document.getElementById('lessons-' + level);
+                container.innerHTML = '';
+                let completedCount = 0;
+
+                curriculum[level].forEach(lesson => {
+                    const isCompleted = completedLessons.has(lesson.id);
+                    if (isCompleted) completedCount++;
+
+                    const card = document.createElement('div');
+                    card.className = 'lesson-card' + (isCompleted ? ' completed' : '');
+                    card.onclick = () => startLesson(lesson);
+                    
+                    card.innerHTML = `
+                        ${isCompleted ? '<div class="check-mark">✓</div>' : ''}
+                        <div class="lesson-icon">${lesson.icon}</div>
+                        <div class="lesson-title">${lesson.title}</div>
+                        <div class="lesson-desc">${lesson.desc}</div>
+                        <div class="lesson-meta">
+                            <span>⏱️ ${lesson.duration}</span>
+                            <span class="lesson-status ${isCompleted ? 'status-done' : 'status-new'}">
+                                ${isCompleted ? 'Completed' : 'Start Lesson'}
+                            </span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                document.getElementById('progress-' + level).innerText = 
+                    `${completedCount} / ${curriculum[level].length} completed`;
+            });
+        }
+
+        // --- Start a Lesson (launches AI tutor with context) ---
+        function startLesson(lesson) {
+            // Switch to chat view
+            const chatNav = document.querySelectorAll('.nav-item')[1];
+            switchView('chat', chatNav);
+
+            // Clear chat and inject lesson context
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+
+            const intro = `📘 <b>Starting Lesson:</b> ${lesson.icon} ${lesson.title}<br><br>` +
+                          `<i>${lesson.desc}</i><br><br>` +
+                          `Let's begin! To make sure this sticks, I'll guide you with questions rather than just lecturing.<br><br>` +
+                          `<b>First question:</b> Before we dive in, what do you already know about <b>${lesson.topic}</b>? Even a one-word answer helps me calibrate.`;
+            
+            appendMessage(intro, 'ai');
+
+            // Store current lesson topic for contextual responses
+            currentLessonTopic = lesson.topic;
+            currentLessonTitle = lesson.title;
+            currentLessonId = lesson.id;
+        }
+
+        let currentLessonTopic = '';
+        let currentLessonTitle = '';
+        let currentLessonId = '';
+
+        // --- Socratic Chat Logic ---
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        const socraticResponses = {
+            'calculate': "Great choice! `CALCULATE` is the most powerful function in DAX. Before I explain how it works, can you tell me: what is the difference between a *Filter Context* and a *Row Context*?",
+            'filter': "Exactly! Filter context is the set of filters applied to the data before the calculation happens. Now, based on that, what do you think the first argument of `CALCULATE` does compared to the subsequent arguments?",
+            'context': "You're getting close! Think about a visual on a report. When you click a bar in a chart, what happens to the data behind the scenes? That's your context changing.",
+            'relationship': "Relationships are how tables talk to each other. If I asked you to describe a 1-to-many relationship using a real-world example (like customers and orders), what would you say?",
+            'default': "That's an interesting thought! Let's break it down. If you had to explain this concept to a 5-year-old using a bucket of apples, how would you describe it?"
+        };
+
+        function formatMarkdown(text) {
+            return text.replace(/`([^`]+)`/g, '<code style="background:#e1dfdd; color:#d13438; padding:2px 5px; border-radius:4px; font-family:Consolas,monospace; font-size:0.9em;">$1</code>')
+                       .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+                       .replace(/\*([^*]+)\*/g, '<i>$1</i>');
+        }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            chatInput.value = '';
+
+            setTimeout(() => {
+                let response = socraticResponses['default'];
+                const lowerText = text.toLowerCase();
+                
+                // Check for lesson-specific keywords
+                if (currentLessonTopic && lowerText.length > 5) {
+                    response = `Great thinking! Let me push you further on **${currentLessonTitle}**.<br><br>Based on what you just said, can you give me an example of how you'd apply this in a real business report? What problem would it solve?`;
+                } else {
+                    for (let key in socraticResponses) {
+                        if (lowerText.includes(key)) {
+                            response = socraticResponses[key];
+                            break;
+                        }
+                    }
+                }
+                appendMessage(response, 'ai');
+                updateProgress(3);
+            }, 800);
+        }
+
+        function appendMessage(text, sender) {
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            
+            if (sender === 'user') {
+                msg.innerText = text;
+            } else {
+                msg.innerHTML = formatMarkdown(text);
+            }
+            
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add a "Mark Complete" button dynamically when user is in a lesson
+        function addCompleteLessonButton() {
+            const inputArea = document.querySelector('.chat-input-area');
+            if (document.getElementById('completeLessonBtn')) return;
+            
+            const btn = document.createElement('button');
+            btn.id = 'completeLessonBtn';
+            btn.className = 'btn btn-success';
+            btn.innerText = '✓ Mark Complete';
+            btn.onclick = () => {
+                if (currentLessonId) {
+                    completedLessons.add(currentLessonId);
+                    renderCurriculum();
+                    updateProgress(10);
+                    appendMessage(`🎉 **Lesson marked complete!** Great work on *${currentLessonTitle}*. Head back to the **Learning Path** to continue your journey.`, 'ai');
+                    currentLessonId = '';
+                    btn.remove();
+                }
+            };
+            inputArea.appendChild(btn);
+        }
+
+        // Override startLesson to also add complete button
+        const originalStartLesson = startLesson;
+        startLesson = function(lesson) {
+            originalStartLesson(lesson);
+            setTimeout(addCompleteLessonButton, 100);
+        };
+
+        // --- DAX Sandbox Logic ---
+        function evaluateDAX() {
+            const code = document.getElementById('daxEditor').value;
+            const log = document.getElementById('outputLog');
+            log.innerHTML = '';
+
+            if (!code.trim()) {
+                addLog("⚠️ Please enter a DAX formula first.", "log-error");
+                return;
+            }
+
+            const lowerCode = code.toLowerCase();
+            
+            if (lowerCode.includes('calculate')) {
+                addLog("✅ CALCULATE detected.", "log-success");
+                addLog("🧠 <b>AI Analysis:</b> Good use of CALCULATE! Remember, the filter arguments must return a table or be boolean expressions. Did you remember to wrap your filter in FILTER() if it's complex?", "log-entry");
+                updateProgress(5);
+            } else if (lowerCode.includes('sumx') || lowerCode.includes('countrows') || lowerCode.includes('averagex')) {
+                addLog("✅ Iterator function detected.", "log-success");
+                addLog("🧠 <b>AI Analysis:</b> You're using an iterator! Remember that iterators create a Row Context. If you need to evaluate a measure inside this iterator, remember that Row Context does NOT automatically trigger Context Transition. You might need CALCULATE() inside your iterator.", "log-entry");
+                updateProgress(5);
+            } else if (lowerCode.includes('sum') && code.includes('[')) {
+                addLog("✅ Basic Aggregation detected.", "log-success");
+                addLog("🧠 <b>AI Analysis:</b> I see you are using SUM. Are you sure you want to sum the column directly? If you need to multiply Quantity * Price row-by-row first, consider using SUMX instead.", "log-entry");
+                updateProgress(5);
+            } else {
+                addLog("❌ I don't recognize standard DAX patterns here.", "log-error");
+                addLog("💡 <b>Hint:</b> Try starting with a measure name, an equals sign, and a function like SUM(), CALCULATE(), or COUNTROWS().", "log-entry");
+            }
+        }
+
+        function showHint() {
+            addLog("💡 <b>Hint:</b> A basic measure looks like this: <br><code>Total Sales = SUM('Sales'[Amount])</code>", "log-entry");
+        }
+
+        function addLog(text, className) {
+            const log = document.getElementById('outputLog');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${className}`;
+            entry.innerHTML = text;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // --- Scenario Logic ---
+        const scenarios = [
+            {
+                title: "🕵️ Scenario 1: The Disappearing Revenue",
+                prompt: "<b>Context:</b> You built a report showing Total Revenue. The business users complain that when they slice by 'Region', the total at the bottom of the matrix doesn't match the sum of the rows. It's showing a much smaller number.<br><br><b>Question:</b> What is the most likely cause of this issue?",
+                choices: [
+                    { text: "A. The visual is using a Filter instead of a Slicer.", correct: false },
+                    { text: "B. There is a bi-directional cross-filter or inactive relationship causing context transition issues.", correct: true },
+                    { text: "C. The column is set to 'Don't Summarize' in the model.", correct: false }
+                ],
+                correctFeedback: "Bi-directional filtering or inactive relationships often cause context transition issues where filters don't propagate as expected, altering the grand total.",
+                incorrectFeedback: "If a visual is slicing correctly but the <b>Grand Total</b> is wrong, it usually means the <b>Filter Context</b> at the total row level is evaluating differently than the row level. Look into relationships and context transition!"
+            },
+            {
+                title: "🕵️ Scenario 2: The Blank Row Mystery",
+                prompt: "<b>Context:</b> You are analyzing Sales by Product Category. You notice a row in your matrix labeled '(Blank)' that contains a significant amount of sales data. Your data model has a strict 1-to-many relationship from Product to Sales.<br><br><b>Question:</b> What does the '(Blank)' row represent?",
+                choices: [
+                    { text: "A. Sales records that have a ProductID not found in the Product dimension table (Orphaned records).", correct: true },
+                    { text: "B. Products that have zero sales.", correct: false },
+                    { text: "C. A bug in the Power BI engine.", correct: false }
+                ],
+                correctFeedback: "Correct! The '(Blank)' row appears when there are orphaned records in the 'many' side of a relationship (e.g., Sales with a ProductID that doesn't exist in the Product table).",
+                incorrectFeedback: "The '(Blank)' row in a 1-to-many relationship indicates orphaned records—data on the 'many' side that doesn't have a matching key on the 'one' side."
+            }
+        ];
+
+        let currentScenarioIndex = 0;
+        const confidenceSlider = document.getElementById('confidenceSlider');
+        const confidenceValue = document.getElementById('confidenceValue');
+        
+        confidenceSlider.oninput = function() {
+            confidenceValue.innerText = this.value + '%';
+        };
+
+        function loadScenario() {
+            const scenario = scenarios[currentScenarioIndex];
+            document.getElementById('scenarioTitle').innerText = scenario.title;
+            document.getElementById('scenarioPrompt').innerHTML = scenario.prompt;
+            
+            const choicesContainer = document.getElementById('scenarioChoices');
+            choicesContainer.innerHTML = '';
+            
+            scenario.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerText = choice.text;
+                btn.onclick = () => checkAnswer(btn, choice.correct);
+                choicesContainer.appendChild(btn);
+            });
+
+            document.getElementById('feedbackBox').style.display = 'none';
+            document.getElementById('scenarioFooter').style.display = 'none';
+        }
+
+        function checkAnswer(btn, isCorrect) {
+            const scenario = scenarios[currentScenarioIndex];
+            const feedback = document.getElementById('feedbackBox');
+            const confidence = confidenceSlider.value;
+            
+            document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                feedback.style.display = 'block';
+                feedback.style.background = '#dff6dd';
+                feedback.style.color = '#107C10';
+                feedback.innerHTML = `<b>🎉 Correct!</b> ${scenario.correctFeedback}<br><br><i>Confidence was: ${confidence}%. ${confidence < 50 ? "You knew it even though you weren't sure! Great intuition." : "Your confidence matched your knowledge perfectly."}</i>`;
+                updateProgress(10);
+            } else {
+                btn.classList.add('incorrect');
+                document.querySelectorAll('.choice-btn').forEach((b, i) => {
+                    if (scenarios[currentScenarioIndex].choices[i].correct) {
+                        b.classList.add('correct');
+                    }
+                });
+                
+                feedback.style.display = 'block';
+                feedback.style.background = '#fde7e9';
+                feedback.style.color = '#D13438';
+                feedback.innerHTML = `<b>❌ Not quite.</b> ${scenario.incorrectFeedback}`;
+            }
+            
+            document.getElementById('scenarioFooter').style.display = 'flex';
+        }
+
+        function nextScenario() {
+            currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+            loadScenario();
+        }
+
+        loadScenario();
+
+        // --- Progress Tracking ---
+        let currentProgress = 0;
+        function updateProgress(amount) {
+            currentProgress = Math.min(100, currentProgress + amount);
+            document.getElementById('globalProgress').style.width = currentProgress + '%';
+            document.getElementById('progressText').innerText = `${currentProgress}% to Data Modeler`;
+            
+            if (currentProgress >= 100) {
+                document.getElementById('levelText').innerText = "Expert 🏆";
+            } else if (currentProgress >= 50) {
+                document.getElementById('levelText').innerText = "Intermediate 🚀";
+            } else if (currentProgress >= 20) {
+                document.getElementById('levelText').innerText = "Beginner+ 🌿";
+            }
+        }
+
+        function resetProgress() {
+            currentProgress = 0;
+            completedLessons.clear();
+            document.getElementById('globalProgress').style.width = '0%';
+            document.getElementById('levelText').innerText = "Beginner 🌱";
+            document.getElementById('progressText').innerText = "0% to Data Modeler";
+            renderCurriculum();
+        }
+
+        // Initialize curriculum on load
+        renderCurriculum();
+    </script>
+</body>
+</html>
