@@ -24,6 +24,7 @@
             height: 100vh;
             background-color: var(--pbi-light);
             color: var(--text-main);
+            overflow: hidden;
         }
 
         /* Sidebar */
@@ -75,7 +76,7 @@
 
         .progress-bar-fill {
             height: 100%;
-            width: 35%; /* Dynamic via JS */
+            width: 0%; 
             background: var(--pbi-yellow);
             transition: width 0.5s ease;
         }
@@ -121,8 +122,8 @@
             overflow-y: auto;
         }
 
-        .view { display: none; animation: fadeIn 0.4s ease; }
-        .view.active { display: block; }
+        .view { display: none; animation: fadeIn 0.4s ease; height: 100%; }
+        .view.active { display: flex; flex-direction: column; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -131,10 +132,11 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            height: 70vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            min-height: 0; /* FIX: Prevents flexbox overflow bug */
         }
 
         .chat-messages {
@@ -144,6 +146,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            min-height: 0; /* FIX: Allows scrolling inside flex container */
         }
 
         .message {
@@ -152,6 +155,7 @@
             border-radius: 12px;
             line-height: 1.5;
             font-size: 0.95rem;
+            word-wrap: break-word;
         }
 
         .message.ai {
@@ -195,13 +199,15 @@
         .btn-primary { background: var(--pbi-accent); color: white; }
         .btn-primary:hover { background: #005a9e; }
         .btn-yellow { background: var(--pbi-yellow); color: var(--pbi-dark); }
+        .btn-outline { background: transparent; border: 2px solid var(--pbi-accent); color: var(--pbi-accent); }
 
         /* Sandbox View */
         .sandbox-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            height: 70vh;
+            flex: 1;
+            min-height: 0;
         }
 
         .panel {
@@ -211,6 +217,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .panel h3 { margin-bottom: 15px; color: var(--pbi-dark); border-bottom: 2px solid var(--pbi-yellow); display: inline-block; padding-bottom: 5px;}
@@ -226,6 +233,7 @@
             resize: none;
             background: #1e1e1e;
             color: #d4d4d4;
+            min-height: 0; /* FIX: Prevents textarea from breaking grid */
         }
 
         .output-log {
@@ -236,9 +244,10 @@
             padding: 15px;
             font-family: 'Consolas', monospace;
             overflow-y: auto;
+            min-height: 0; /* FIX: Allows scrolling inside flex container */
         }
 
-        .log-entry { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; }
+        .log-entry { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; line-height: 1.4; }
         .log-error { color: var(--error); font-weight: bold; }
         .log-success { color: var(--success); font-weight: bold; }
 
@@ -250,10 +259,11 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             max-width: 800px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .scenario-prompt {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 20px;
             line-height: 1.6;
             background: #fff4ce;
@@ -272,11 +282,13 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
-        .choice-btn:hover { border-color: var(--pbi-accent); background: #eef6fc; }
+        .choice-btn:hover:not(:disabled) { border-color: var(--pbi-accent); background: #eef6fc; }
         .choice-btn.correct { border-color: var(--success); background: #dff6dd; }
         .choice-btn.incorrect { border-color: var(--error); background: #fde7e9; }
+        .choice-btn:disabled { cursor: not-allowed; opacity: 0.8; }
 
         .feedback-box {
             margin-top: 20px;
@@ -284,6 +296,13 @@
             border-radius: 8px;
             display: none;
             line-height: 1.5;
+        }
+
+        .scenario-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            display: none;
         }
 
         /* Confidence Slider */
@@ -308,11 +327,11 @@
 
         <div class="progress-section">
             <div style="font-size: 0.9rem; color: #aaa;">Current Level</div>
-            <div style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;">Beginner 🌱</div>
+            <div style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;" id="levelText">Beginner 🌱</div>
             <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="globalProgress"></div>
             </div>
-            <div style="font-size: 0.8rem; color: #aaa; margin-top: 8px;">35% to Data Modeler</div>
+            <div style="font-size: 0.8rem; color: #aaa; margin-top: 8px;" id="progressText">0% to Data Modeler</div>
         </div>
 
         <ul class="nav-menu">
@@ -337,7 +356,7 @@
                     <div class="chat-messages" id="chatMessages">
                         <div class="message ai">
                             👋 Welcome! I'm your Power BI AI Tutor. Instead of just giving you answers, I'm going to help you <b>discover</b> them. <br><br>
-                            What concept are we tackling today? (e.g., <i>CALCULATE, Row Context, Star Schema</i>)
+                            What concept are we tackling today? (e.g., <code style="background:#e1dfdd; padding:2px 5px; border-radius:4px;">CALCULATE</code>, Row Context, Star Schema)
                         </div>
                     </div>
                     <div class="chat-input-area">
@@ -352,11 +371,11 @@
                 <div class="sandbox-grid">
                     <div class="panel">
                         <h3>DAX Formula Builder</h3>
-                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Try writing a measure to calculate Total Sales. The AI will check your syntax and context!</p>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Try writing a measure. The AI will check your syntax and context!</p>
                         <textarea class="dax-editor" id="daxEditor" placeholder="Total Sales = &#10;SUM(Sales[Amount])"></textarea>
                         <div style="margin-top: 15px; display: flex; gap: 10px;">
                             <button class="btn btn-primary" onclick="evaluateDAX()">Evaluate & Get Feedback</button>
-                            <button class="btn" style="background:#eee;" onclick="showHint()">💡 Hint</button>
+                            <button class="btn btn-outline" onclick="showHint()">💡 Hint</button>
                         </div>
                     </div>
                     <div class="panel">
@@ -371,174 +390,11 @@
             <!-- VIEW 3: Scenario Lab -->
             <div id="view-scenario" class="view">
                 <div class="scenario-card">
-                    <h2 style="margin-bottom: 20px;">🕵️ Scenario: The Disappearing Revenue</h2>
-                    <div class="scenario-prompt">
-                        <b>Context:</b> You built a report showing Total Revenue. The business users complain that when they slice by "Region", the total at the bottom of the matrix doesn't match the sum of the rows. It's showing a much smaller number.<br><br>
-                        <b>Question:</b> What is the most likely cause of this issue?
+                    <h2 id="scenarioTitle" style="margin-bottom: 20px;">🕵️ Scenario 1: The Disappearing Revenue</h2>
+                    <div class="scenario-prompt" id="scenarioPrompt">
+                        Loading scenario...
                     </div>
 
                     <div class="confidence-meter">
                         <label>How confident are you?</label>
                         <input type="range" min="0" max="100" value="50" id="confidenceSlider">
-                        <span id="confidenceValue">50%</span>
-                    </div>
-
-                    <div class="choices" id="scenarioChoices">
-                        <button class="choice-btn" onclick="checkAnswer(this, false, 'filter')">A. The visual is using a Filter instead of a Slicer.</button>
-                        <button class="choice-btn" onclick="checkAnswer(this, true, 'context')">B. There is a bi-directional cross-filter or inactive relationship causing context transition issues.</button>
-                        <button class="choice-btn" onclick="checkAnswer(this, false, 'agg')">C. The column is set to "Don't Summarize" in the model.</button>
-                    </div>
-
-                    <div class="feedback-box" id="feedbackBox"></div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <script>
-        // --- Navigation ---
-        function switchView(viewId, element) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('view-' + viewId).classList.add('active');
-            
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            element.classList.add('active');
-
-            const titles = {
-                'chat': 'Socratic Learning Chat',
-                'sandbox': 'Interactive DAX Playground',
-                'scenario': 'Troubleshooting Lab'
-            };
-            document.getElementById('viewTitle').innerText = titles[viewId];
-        }
-
-        // --- Socratic Chat Logic ---
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-
-        // Simulated Socratic AI Responses
-        const socraticResponses = {
-            'calculate': "Great choice! `CALCULATE` is the most powerful function in DAX. Before I explain how it works, can you tell me: what is the difference between a *Filter Context* and a *Row Context*?",
-            'filter': "Exactly! Filter context is the set of filters applied to the data before the calculation happens. Now, based on that, what do you think the first argument of `CALCULATE` does compared to the subsequent arguments?",
-            'default': "That's an interesting thought! Let's break it down. If you had to explain this concept to a 5-year-old using a bucket of apples, how would you describe it?",
-            'sum': "You're on the right track with aggregation! But remember, `SUM` operates on columns. If you want to aggregate based on a condition, what other function might you wrap around it, or what iterator function could you use?"
-        };
-
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-
-            // Add User Message
-            appendMessage(text, 'user');
-            chatInput.value = '';
-
-            // Simulate AI Typing Delay
-            setTimeout(() => {
-                let response = socraticResponses['default'];
-                const lowerText = text.toLowerCase();
-                
-                for (let key in socraticResponses) {
-                    if (lowerText.includes(key)) {
-                        response = socraticResponses[key];
-                        break;
-                    }
-                }
-                appendMessage(response, 'ai');
-                updateProgress(5); // Reward interaction
-            }, 800);
-        }
-
-        function appendMessage(text, sender) {
-            const msg = document.createElement('div');
-            msg.className = `message ${sender}`;
-            msg.innerHTML = text;
-            chatMessages.appendChild(msg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // --- DAX Sandbox Logic ---
-        function evaluateDAX() {
-            const code = document.getElementById('daxEditor').value;
-            const log = document.getElementById('outputLog');
-            log.innerHTML = '';
-
-            if (!code.trim()) {
-                addLog("⚠️ Please enter a DAX formula first.", "log-error");
-                return;
-            }
-
-            // Simulated Syntax & Logic Checker
-            if (code.toLowerCase().includes('sum') && code.includes('[')) {
-                addLog("✅ Syntax looks valid!", "log-success");
-                addLog("🧠 AI Analysis: I see you are using SUM. Are you sure you want to sum the column directly, or do you need to handle blank rows? Consider trying SUMX for row-by-row logic if you need to multiply Quantity * Price first.", "log-entry");
-                updateProgress(10);
-            } else if (code.toLowerCase().includes('calculate')) {
-                addLog("✅ CALCULATE detected.", "log-success");
-                addLog("🧠 AI Analysis: Good use of CALCULATE! Remember, the filter arguments must return a table or be boolean expressions. Did you remember to wrap your filter in FILTER() if it's complex?", "log-entry");
-                updateProgress(10);
-            } else {
-                addLog("❌ I don't recognize standard DAX patterns here.", "log-error");
-                addLog("💡 Hint: Try starting with a measure name, an equals sign, and a function like SUM() or COUNTROWS().", "log-entry");
-            }
-        }
-
-        function showHint() {
-            const log = document.getElementById('outputLog');
-            addLog("💡 Hint: A basic measure looks like this: <br><code>Measure Name = SUM('Table'[Column])</code>", "log-entry");
-        }
-
-        function addLog(text, className) {
-            const log = document.getElementById('outputLog');
-            const entry = document.createElement('div');
-            entry.className = `log-entry ${className}`;
-            entry.innerHTML = text;
-            log.appendChild(entry);
-            log.scrollTop = log.scrollHeight;
-        }
-
-        // --- Scenario Logic ---
-        const confidenceSlider = document.getElementById('confidenceSlider');
-        const confidenceValue = document.getElementById('confidenceValue');
-        confidenceSlider.oninput = function() {
-            confidenceValue.innerText = this.value + '%';
-        };
-
-        function checkAnswer(btn, isCorrect, reason) {
-            const feedback = document.getElementById('feedbackBox');
-            const confidence = confidenceSlider.value;
-            
-            // Disable all buttons
-            document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-                feedback.style.display = 'block';
-                feedback.style.background = '#dff6dd';
-                feedback.style.color = '#107C10';
-                feedback.innerHTML = `<b>🎉 Correct!</b> Bi-directional filtering or inactive relationships often cause context transition issues where filters don't propagate as expected, altering the grand total.<br><br><i>Confidence was: ${confidence}%. ${confidence < 50 ? "You knew it even though you weren't sure! Great intuition." : "Your confidence matched your knowledge perfectly."}</i>`;
-                updateProgress(20);
-            } else {
-                btn.classList.add('incorrect');
-                feedback.style.display = 'block';
-                feedback.style.background = '#fde7e9';
-                feedback.style.color = '#D13438';
-                feedback.innerHTML = `<b>❌ Not quite.</b> Let's rethink. If a visual is slicing correctly but the <b>Grand Total</b> is wrong, it usually means the <b>Filter Context</b> at the total row level is evaluating differently than the row level. Look into relationships and context transition!`;
-            }
-        }
-
-        // --- Progress Tracking ---
-        let currentProgress = 35;
-        function updateProgress(amount) {
-            currentProgress = Math.min(100, currentProgress + amount);
-            document.getElementById('globalProgress').style.width = currentProgress + '%';
-        }
-
-        function resetProgress() {
-            currentProgress = 0;
-            document.getElementById('globalProgress').style.width = '0%';
-            alert("Progress reset. Let's start fresh!");
-        }
-    </script>
-</body>
-</html>
