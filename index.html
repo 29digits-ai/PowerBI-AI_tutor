@@ -1,995 +1,1022 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="gold">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power BI Interactive AI Tutor — Beginner to Expert Workspace</title>
-    <style>
-        :root {
-            --pbi-yellow: #F2C811;
-            --pbi-dark: #1F1F1F;
-            --pbi-gray: #2D2D2D;
-            --pbi-light: #F3F2F1;
-            --pbi-accent: #0078D4;
-            --success: #107C10;
-            --error: #D13438;
-            --text-main: #323130;
-            --text-light: #FFFFFF;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power BI Interactive AI Tutor — Beginner to Expert Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============ THEMES (10) ============ */
+:root{--bg:#0d1117;--bg2:#141a23;--bg3:#1b2432;--ink:#edf2f9;--muted:#93a0b4;--accent:#f2c811;--accent2:#ffe27a;--line:#2a3550;--soft:rgba(242,200,17,.14);--glow:rgba(242,200,17,.22);--good:#3ddc97;--bad:#ff6b6b;--radius:14px}
+[data-theme="light"]{--bg:#f2f4f8;--bg2:#ffffff;--bg3:#eef1f6;--ink:#17212f;--muted:#5c6a7f;--accent:#c99700;--accent2:#8a6d00;--line:#dde3ec;--soft:rgba(201,151,0,.12);--glow:rgba(201,151,0,.16)}
+[data-theme="ocean"]{--bg:#061826;--bg2:#0b2334;--bg3:#0e2c44;--ink:#e8f4fb;--muted:#7fa6bd;--accent:#2fd4ff;--accent2:#8fe9ff;--line:#16405c;--soft:rgba(47,212,255,.13);--glow:rgba(47,212,255,.2)}
+[data-theme="forest"]{--bg:#0a1712;--bg2:#10221b;--bg3:#153024;--ink:#eaf6ef;--muted:#86a896;--accent:#3ddc97;--accent2:#93f0c6;--line:#1d3c2d;--soft:rgba(61,220,151,.13);--glow:rgba(61,220,151,.2)}
+[data-theme="sunset"]{--bg:#1c1016;--bg2:#251720;--bg3:#33212b;--ink:#fbeeee;--muted:#b78f9a;--accent:#ff8f4d;--accent2:#ffc08a;--line:#462b33;--soft:rgba(255,143,77,.13);--glow:rgba(255,143,77,.2)}
+[data-theme="royal"]{--bg:#120f24;--bg2:#1a1633;--bg3:#241e45;--ink:#efeaff;--muted:#9c93c4;--accent:#a78bfa;--accent2:#d3c5ff;--line:#322a5c;--soft:rgba(167,139,250,.14);--glow:rgba(167,139,250,.22)}
+[data-theme="contrast"]{--bg:#000;--bg2:#0c0c0c;--bg3:#181818;--ink:#fff;--muted:#cfcfcf;--accent:#ffe600;--accent2:#fff59d;--line:#3d3d3d;--soft:rgba(255,230,0,.15);--glow:rgba(255,230,0,.2)}
+[data-theme="paper"]{--bg:#f6f1e7;--bg2:#fffdf7;--bg3:#efe7d8;--ink:#33291c;--muted:#7a6c55;--accent:#b45309;--accent2:#7c3a05;--line:#e0d5bf;--soft:rgba(180,83,9,.12);--glow:rgba(180,83,9,.14)}
+[data-theme="crimson"]{--bg:#170b10;--bg2:#211119;--bg3:#2d1822;--ink:#f9ebf0;--muted:#b18b98;--accent:#fb4d6d;--accent2:#ff9db1;--line:#3f2230;--soft:rgba(251,77,109,.13);--glow:rgba(251,77,109,.2)}
+[data-theme="terminal"]{--bg:#0b0f0c;--bg2:#101612;--bg3:#16201a;--ink:#d7ffe3;--muted:#7da48b;--accent:#46e07c;--accent2:#a5f3c0;--line:#1f3327;--soft:rgba(70,224,124,.13);--glow:rgba(70,224,124,.2)}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:100%}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s}
+::selection{background:var(--accent);color:#111}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif}
+.bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.14;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 100%)}
+.bg-glow{position:fixed;width:60vw;height:60vw;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;background:radial-gradient(circle,var(--glow),transparent 65%);top:-28vw;left:-12vw;animation:drift 26s ease-in-out infinite alternate}
+.bg-glow.g2{left:auto;right:-20vw;top:auto;bottom:-30vw;animation-duration:32s;opacity:.7}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(6vw,4vh) scale(1.12)}}
+body.reduce-motion *{animation:none!important;transition:none!important}
 
-        body {
-            display: flex;
-            height: 100vh;
-            background-color: var(--pbi-light);
-            color: var(--text-main);
-            overflow: hidden;
-        }
+/* ============ HEADER ============ */
+header{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 26px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:13px}
+.logo-bars{display:flex;align-items:flex-end;gap:3px;height:34px;padding:5px 7px;background:var(--bg3);border:1px solid var(--line);border-radius:9px}
+.logo-bars i{width:5px;border-radius:2px;background:linear-gradient(180deg,var(--accent2),var(--accent));transform-origin:bottom;animation:grow .8s cubic-bezier(.2,.9,.3,1.2) backwards}
+.logo-bars i:nth-child(1){height:35%;animation-delay:.05s}.logo-bars i:nth-child(2){height:55%;animation-delay:.15s}.logo-bars i:nth-child(3){height:75%;animation-delay:.25s}.logo-bars i:nth-child(4){height:100%;animation-delay:.35s}
+@keyframes grow{from{transform:scaleY(0)}}
+.brand h1{font-size:1.25rem;font-weight:700;letter-spacing:.02em;line-height:1.1}
+.brand .sub{font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+.head-right{display:flex;align-items:center;gap:14px}
+.level-chip{display:flex;align-items:center;gap:10px;padding:7px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:99px}
+.level-chip .emo{font-size:1.25rem}
+.lvl-name{font-family:'Space Grotesk';font-weight:600;font-size:.85rem}
+.xp-track{width:130px;height:5px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-top:3px}
+.xp-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));position:relative;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.xp-fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-100%);animation:shimmer 2.6s infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+.lvl-pct{font-size:.72rem;color:var(--muted);white-space:nowrap}
+.gear{position:relative;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-size:1.2rem;transition:.25s}
+.gear:hover{border-color:var(--accent);background:var(--soft);transform:rotate(20deg)}
+.gear .dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{transform:scale(1.5);opacity:.5}}
 
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: var(--pbi-dark);
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        }
+/* ============ TABS ============ */
+.tabs{display:flex;gap:4px;padding:10px 26px 0;border-bottom:1px solid var(--line);position:relative;z-index:5;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:8px;padding:11px 18px;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);font-weight:600;font-size:.92rem;white-space:nowrap;transition:.2s;border-radius:10px 10px 0 0}
+.tab:hover{color:var(--ink);background:var(--soft)}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .ic{font-size:1.05rem}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
+/* ============ LAYOUT ============ */
+main{position:relative;z-index:5;max-width:1180px;margin:0 auto;padding:30px 26px 70px}
+section[hidden]{display:none}
+.tab-panel{animation:fadeUp .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.kicker{font-size:.7rem;font-weight:700;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+.sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:700;letter-spacing:-.01em}
+.sec-head p{color:var(--muted);max-width:640px;margin-top:6px;font-size:.95rem;line-height:1.55}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 26px rgba(0,0,0,.22)}
+.ghost{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:.85rem;transition:.2s}
+.ghost:hover{border-color:var(--bad);color:var(--bad)}
+.btn{padding:10px 18px;border-radius:10px;border:none;background:var(--accent);color:#111;font-weight:700;font-size:.9rem;transition:.2s;box-shadow:0 4px 14px var(--glow)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn:active{transform:translateY(0)}
+.btn.sub{background:var(--bg3);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn.sub:hover{border-color:var(--accent)}
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--pbi-yellow);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--pbi-dark);
-            font-weight: bold;
-        }
+/* ============ LEARNING PATH ============ */
+.overview{display:flex;align-items:center;gap:26px;flex-wrap:wrap;padding:22px 26px;margin-bottom:26px;border-left:4px solid var(--accent)}
+.ov-num{font-family:'Space Grotesk';font-size:3rem;font-weight:700;line-height:1;color:var(--accent)}
+.ov-num small{font-size:1.4rem;color:var(--muted)}
+.ov-mid{flex:1;min-width:220px}
+.ov-bar{height:10px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.ov-bar>div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .8s}
+.ov-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:7px}
+.tier{margin-bottom:30px}
+.tier-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.tier-badge{font-family:'Space Grotesk';font-size:.68rem;font-weight:700;letter-spacing:.16em;padding:6px 12px;border-radius:7px;color:#111}
+.tier-badge.t0{background:#5eead4}.tier-badge.t1{background:#7dd3fc}.tier-badge.t2{background:#f0abfc}.tier-badge.t3{background:#fda4af}
+.tier-head h3{font-size:1.15rem}
+.tier-count{margin-left:auto;font-size:.82rem;color:var(--muted);background:var(--bg2);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+.lessons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.lesson{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:15px 16px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;color:var(--ink);transition:.22s;position:relative;overflow:hidden}
+.lesson:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.lesson .num{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:.82rem;background:var(--bg3);color:var(--muted);border:1px solid var(--line)}
+.lesson .lt{font-weight:600;font-size:.92rem;line-height:1.3}
+.lesson .lm{font-size:.75rem;color:var(--muted);margin-top:5px}
+.lesson.done{border-left:3px solid var(--good)}
+.lesson.done .num{background:var(--good);color:#08281a;border-color:transparent}
 
-        .progress-section {
-            background: var(--pbi-gray);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+/* ============ CHAT ============ */
+.chat-wrap{display:flex;flex-direction:column}
+.chat{display:flex;flex-direction:column;height:540px}
+.chat-scroll{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:14px}
+body.density-compact .chat-scroll{gap:8px;padding:14px}
+.bubble{display:flex;gap:10px;max-width:82%;animation:fadeUp .3s}
+.bubble.tutor{align-self:flex-start}
+.bubble.user{align-self:flex-end;flex-direction:row-reverse}
+.avatar{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:var(--soft);border:1px solid var(--accent)}
+.bubble.user .avatar{background:var(--bg3);border-color:var(--line)}
+.msg{padding:12px 15px;border-radius:4px 14px 14px 14px;background:var(--bg3);border:1px solid var(--line);font-size:.94rem;line-height:1.6}
+body.density-compact .msg{padding:8px 11px;font-size:.87rem}
+.bubble.user .msg{background:var(--soft);border-color:var(--accent);border-radius:14px 4px 14px 14px}
+.msg .w{border-radius:3px;padding:0 1px}
+.msg .w.hl{background:var(--accent);color:#111}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 12px}
+.chip{padding:6px 13px;border-radius:99px;border:1px solid var(--line);background:var(--bg3);color:var(--muted);font-size:.78rem;font-weight:600;transition:.2s}
+.chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.chat-input{display:flex;gap:10px;padding:14px 22px;border-top:1px solid var(--line)}
+.chat-input input{flex:1;padding:12px 16px;border-radius:11px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-family:inherit;font-size:.93rem;outline:none;transition:.2s}
+.chat-input input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--soft)}
 
-        .progress-bar-bg {
-            height: 8px;
-            background: #444;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
+/* ============ DAX ============ */
+.dax-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media(max-width:880px){.dax-grid{grid-template-columns:1fr}}
+.dax-editor,.dax-log{padding:20px}
+.chal-goal{font-size:.9rem;color:var(--muted);margin:10px 0 14px;font-style:italic}
+.chal-goal b{color:var(--accent2);font-style:normal}
+textarea#daxIn{width:100%;min-height:190px;resize:vertical;padding:16px;border-radius:11px;border:1px solid var(--line);background:var(--bg);color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:.88rem;line-height:1.65;outline:none;transition:.2s}
+textarea#daxIn:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--soft)}
+.dax-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.log-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.log-head h3{font-size:1rem}
+#daxLog{max-height:430px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.log-empty{color:var(--muted);font-size:.88rem;font-style:italic}
+.log-entry{padding:13px 15px;border-radius:11px;background:var(--bg3);border:1px solid var(--line);animation:fadeUp .35s}
+.log-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.log-time{font-size:.72rem;color:var(--muted)}
+.grade{font-family:'Space Grotesk';font-weight:700;font-size:.8rem;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#111}
+.gA{background:var(--good)}.gB{background:#7dd3fc}.gC{background:#fbbf24}.gD{background:var(--bad)}
+.log-score{font-size:.78rem;color:var(--muted)}
+.log-entry ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.log-entry li{font-size:.83rem;line-height:1.45;padding-left:22px;position:relative}
+.log-entry li::before{position:absolute;left:0}
+li.ok::before{content:"✓";color:var(--good)}li.warn::before{content:"⚠";color:#fbbf24}li.err::before{content:"✗";color:var(--bad)}li.tip::before{content:"💡"}
+.log-entry.hint{border-left:3px solid var(--accent)}
 
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%; 
-            background: var(--pbi-yellow);
-            transition: width 0.5s ease;
-        }
+/* ============ LAB ============ */
+.case{position:relative;padding:26px;overflow:hidden}
+.stamp{position:absolute;top:22px;right:-34px;transform:rotate(18deg);font-family:'Space Grotesk';font-size:.7rem;font-weight:700;letter-spacing:.3em;color:var(--accent);border:2px solid var(--accent);padding:5px 44px;opacity:.55}
+.case-no{font-size:.7rem;letter-spacing:.22em;color:var(--muted);font-weight:700}
+.case h3{font-size:1.5rem;margin:6px 0 12px}
+.case .story{color:var(--muted);line-height:1.65;font-size:.95rem;max-width:720px}
+.clues{display:flex;flex-direction:column;gap:9px;margin:20px 0}
+.clue{display:flex;gap:12px;align-items:flex-start;padding:12px 15px;border-radius:11px;background:var(--bg3);border:1px dashed var(--line);font-size:.88rem;line-height:1.5;animation:fadeUp .4s}
+.clue b{color:var(--accent);font-family:'Space Grotesk'}
+.diag{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:16px}
+.opt{text-align:left;padding:13px 16px;border-radius:11px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);font-size:.88rem;line-height:1.45;transition:.2s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateY(-2px)}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg3))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--bg3));animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.case-feedback{margin-top:16px;padding:14px 16px;border-radius:11px;font-size:.9rem;line-height:1.6;display:none;animation:fadeUp .4s}
+.case-feedback.show{display:block}
+.case-feedback.good{background:color-mix(in srgb,var(--good) 12%,var(--bg2));border:1px solid var(--good)}
+.case-feedback.bad{background:color-mix(in srgb,var(--bad) 10%,var(--bg2));border:1px solid var(--bad)}
+.case-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.conf{display:flex;align-items:center;gap:12px;font-size:.85rem;color:var(--muted)}
+.conf input[type=range]{width:170px;accent-color:var(--accent)}
+.conf b{color:var(--accent);font-family:'Space Grotesk';min-width:38px}
 
-        .nav-menu { list-style: none; flex: 1; overflow-y: auto; }
-        
-        .nav-item {
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
+/* ============ SETTINGS PANEL ============ */
+#settingsPanel{position:fixed;top:0;right:0;height:100%;width:min(430px,94vw);background:var(--bg2);border-left:1px solid var(--line);z-index:60;transform:translateX(105%);transition:transform .4s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:-16px 0 50px rgba(0,0,0,.4)}
+#settingsPanel.open{transform:translateX(0)}
+.sp-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.sp-head h2{font-size:1.2rem}
+.sp-close{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:none;color:var(--muted);font-size:1rem;transition:.2s}
+.sp-close:hover{color:var(--bad);border-color:var(--bad)}
+.sp-body{flex:1;overflow-y:auto;padding:10px 16px 30px}
+.acc{border:1px solid var(--line);border-radius:12px;margin-top:12px;overflow:hidden;background:var(--bg)}
+.acc-head{width:100%;display:flex;align-items:center;gap:11px;padding:14px 16px;background:none;border:none;color:var(--ink);font-family:'Space Grotesk';font-weight:600;font-size:.95rem;text-align:left}
+.acc-head .chev{margin-left:auto;transition:transform .3s;color:var(--muted)}
+.acc.open .chev{transform:rotate(180deg)}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.8,.2,1)}
+.acc.open .acc-body{grid-template-rows:1fr}
+.acc-inner{overflow:hidden}
+.acc-pad{padding:4px 16px 18px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.set-row:last-child{border-bottom:none}
+.set-lbl{font-size:.88rem;font-weight:600}
+.set-sub{font-size:.74rem;color:var(--muted);margin-top:2px}
+.switch{position:relative;width:44px;height:24px;flex:none}
+.switch input{opacity:0;width:100%;height:100%;position:absolute;cursor:pointer;z-index:2;margin:0}
+.knob{position:absolute;inset:0;border-radius:99px;background:var(--bg3);border:1px solid var(--line);transition:.25s}
+.knob::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:.25s}
+.switch input:checked+.knob{background:var(--soft);border-color:var(--accent)}
+.switch input:checked+.knob::after{left:22px;background:var(--accent)}
+.seg{display:flex;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{flex:1;padding:7px 10px;border:none;border-radius:8px;background:none;color:var(--muted);font-size:.78rem;font-weight:600;transition:.2s;min-width:52px}
+.seg button.on{background:var(--accent);color:#111}
+input[type=range].sr{width:100%;accent-color:var(--accent)}
+.range-row{padding:10px 0}
+.range-lbl{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:8px}
+.range-lbl b{color:var(--accent);font-family:'Space Grotesk'}
+.theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding-top:6px}
+.theme-btn{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);font-size:.8rem;font-weight:600;transition:.2s;text-align:left}
+.theme-btn:hover{border-color:var(--accent)}
+.theme-btn.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--soft)}
+.swatch{flex:none;width:22px;height:22px;border-radius:7px;border:1px solid rgba(0,0,0,.25)}
+.voice-search{width:100%;padding:9px 13px;border-radius:9px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);font-family:inherit;font-size:.85rem;outline:none;margin-bottom:9px}
+.voice-search:focus{border-color:var(--accent)}
+.voice-list{max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;border:1px solid var(--line);border-radius:10px;padding:7px;background:var(--bg3)}
+.voice-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:.15s}
+.voice-row:hover{background:var(--bg2)}
+.voice-row.on{border-color:var(--accent);background:var(--soft)}
+.voice-row .vn{font-size:.85rem;font-weight:600}
+.voice-row .vs{font-size:.71rem;color:var(--muted)}
+.voice-row .pv{margin-left:auto;flex:none;width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--accent);font-size:.7rem;transition:.2s}
+.voice-row .pv:hover{border-color:var(--accent)}
+.voice-foot{display:flex;align-items:center;gap:10px;margin-top:11px}
+.voice-foot .sel-name{font-size:.8rem;color:var(--muted)}
+.voice-foot .sel-name b{color:var(--accent2)}
+.data-btns{display:flex;gap:8px;flex-wrap:wrap;padding-top:6px}
+.data-btns button{flex:1;min-width:100px;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);font-size:.8rem;font-weight:600;transition:.2s}
+.data-btns button:hover{border-color:var(--accent)}
+.data-btns button.danger:hover{border-color:var(--bad);color:var(--bad)}
 
-        .nav-item:hover { background: var(--pbi-gray); }
-        .nav-item.active { background: var(--pbi-accent); color: white; font-weight: 600; }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .header {
-            padding: 20px 40px;
-            background: white;
-            border-bottom: 1px solid #e1dfdd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header h1 { font-size: 1.5rem; color: var(--pbi-dark); }
-        
-        .workspace {
-            flex: 1;
-            padding: 30px 40px;
-            overflow-y: auto;
-        }
-
-        .view { display: none; animation: fadeIn 0.4s ease; height: 100%; }
-        .view.active { display: flex; flex-direction: column; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Chat View */
-        .chat-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-height: 0;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-height: 0;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            line-height: 1.5;
-            font-size: 0.95rem;
-            word-wrap: break-word;
-        }
-
-        .message.ai {
-            background: #F3F2F1;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
-
-        .message.user {
-            background: var(--pbi-accent);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
-
-        .chat-input-area {
-            padding: 15px;
-            border-top: 1px solid #e1dfdd;
-            display: flex;
-            gap: 10px;
-        }
-
-        .chat-input-area input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.1s;
-        }
-        
-        .btn:active { transform: scale(0.98); }
-        .btn-primary { background: var(--pbi-accent); color: white; }
-        .btn-primary:hover { background: #005a9e; }
-        .btn-yellow { background: var(--pbi-yellow); color: var(--pbi-dark); }
-        .btn-outline { background: transparent; border: 2px solid var(--pbi-accent); color: var(--pbi-accent); }
-        .btn-success { background: var(--success); color: white; }
-
-        /* Sandbox View */
-        .sandbox-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .panel {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .panel h3 { margin-bottom: 15px; color: var(--pbi-dark); border-bottom: 2px solid var(--pbi-yellow); display: inline-block; padding-bottom: 5px;}
-
-        .dax-editor {
-            flex: 1;
-            width: 100%;
-            padding: 15px;
-            font-family: 'Consolas', monospace;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            resize: none;
-            background: #1e1e1e;
-            color: #d4d4d4;
-            min-height: 0;
-        }
-
-        .output-log {
-            flex: 1;
-            background: #fafafa;
-            border: 1px solid #e1dfdd;
-            border-radius: 8px;
-            padding: 15px;
-            font-family: 'Consolas', monospace;
-            overflow-y: auto;
-            min-height: 0;
-        }
-
-        .log-entry { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; line-height: 1.4; }
-        .log-error { color: var(--error); font-weight: bold; }
-        .log-success { color: var(--success); font-weight: bold; }
-
-        /* Scenario View */
-        .scenario-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .scenario-prompt {
-            font-size: 1.05rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            background: #fff4ce;
-            padding: 15px;
-            border-left: 4px solid var(--pbi-yellow);
-            border-radius: 4px;
-        }
-
-        .choices { display: flex; flex-direction: column; gap: 12px; }
-        
-        .choice-btn {
-            text-align: left;
-            padding: 15px;
-            background: #f8f8f8;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .choice-btn:hover:not(:disabled) { border-color: var(--pbi-accent); background: #eef6fc; }
-        .choice-btn.correct { border-color: var(--success); background: #dff6dd; }
-        .choice-btn.incorrect { border-color: var(--error); background: #fde7e9; }
-        .choice-btn:disabled { cursor: not-allowed; opacity: 0.8; }
-
-        .feedback-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            line-height: 1.5;
-        }
-
-        .scenario-footer {
-            margin-top: 20px;
-            display: flex;
-            justify-content: flex-end;
-            display: none;
-        }
-
-        /* Confidence Slider */
-        .confidence-meter {
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .confidence-meter input[type=range] { flex: 1; }
-
-        /* Curriculum / Contents View */
-        .curriculum-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .curriculum-header {
-            background: linear-gradient(135deg, var(--pbi-dark), var(--pbi-gray));
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-
-        .curriculum-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
-        .curriculum-header p { opacity: 0.85; line-height: 1.5; }
-
-        .level-section {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .level-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--pbi-light);
-        }
-
-        .level-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .level-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .badge-beginner { background: var(--success); }
-        .badge-intermediate { background: var(--pbi-accent); }
-        .badge-advanced { background: #8764b8; }
-        .badge-expert { background: var(--pbi-dark); }
-
-        .level-progress {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .lesson-card {
-            background: var(--pbi-light);
-            border: 2px solid transparent;
-            border-radius: 10px;
-            padding: 18px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .lesson-card:hover {
-            border-color: var(--pbi-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,120,212,0.15);
-        }
-
-        .lesson-card.completed {
-            background: #dff6dd;
-            border-color: var(--success);
-        }
-
-        .lesson-card.in-progress {
-            border-color: var(--pbi-yellow);
-            background: #fff8dc;
-        }
-
-        .lesson-icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .lesson-title {
-            font-weight: 600;
-            color: var(--pbi-dark);
-            margin-bottom: 6px;
-            font-size: 1rem;
-        }
-
-        .lesson-desc {
-            font-size: 0.85rem;
-            color: #555;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .lesson-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: #777;
-        }
-
-        .lesson-status {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-new { background: #e1dfdd; color: #555; }
-        .status-progress { background: var(--pbi-yellow); color: var(--pbi-dark); }
-        .status-done { background: var(--success); color: white; }
-
-        .check-mark {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 24px;
-            height: 24px;
-            background: var(--success);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-    </style>
+/* ============ MODAL / TOASTS / FOOTER ============ */
+#modalWrap{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;place-items:center;padding:20px}
+#modalWrap.show{display:grid}
+.modal{width:min(660px,100%);max-height:88vh;overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:28px;animation:pop .35s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.modal .m-tier{font-size:.66rem;letter-spacing:.2em;font-weight:700;padding:4px 10px;border-radius:6px;color:#111;display:inline-block}
+.modal h3{font-size:1.45rem;margin:12px 0 4px}
+.modal .m-meta{font-size:.8rem;color:var(--muted);margin-bottom:16px}
+.modal .teach p{font-size:.93rem;line-height:1.7;color:var(--ink);margin-bottom:12px}
+.m-q{margin-top:18px;padding:16px;border-radius:12px;background:var(--soft);border:1px solid var(--accent)}
+.m-q .qq{font-weight:600;font-size:.95rem;margin-bottom:12px}
+.m-opts{display:grid;gap:8px}
+.m-opt{text-align:left;padding:11px 14px;border-radius:9px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-size:.88rem;transition:.2s}
+.m-opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.m-opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg2))}
+.m-opt.wrong{border-color:var(--bad);animation:shake .4s}
+.m-fb{margin-top:12px;font-size:.87rem;line-height:1.55;display:none}
+.m-fb.show{display:block;animation:fadeUp .3s}
+.m-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+#toasts{position:fixed;bottom:22px;right:22px;z-index:90;display:flex;flex-direction:column;gap:10px}
+.toast{display:flex;align-items:center;gap:11px;padding:13px 18px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);border-left:4px solid var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.4);font-size:.88rem;font-weight:600;animation:slideIn .4s cubic-bezier(.2,.9,.3,1.2);max-width:340px}
+.toast.xp{border-left-color:var(--good)}.toast.lvl{border-left-color:var(--accent2);background:var(--soft)}
+.toast small{display:block;font-weight:400;color:var(--muted)}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}}
+footer{position:relative;z-index:5;text-align:center;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.76rem}
+footer kbd{padding:2px 7px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--bg2);font-family:'IBM Plex Mono';font-size:.7rem}
+@media(max-width:640px){header{flex-wrap:wrap}.lvl-pct{display:none}.lvl-name{display:none}}
+</style>
 </head>
 <body>
+<div class="bg-grid"></div><div class="bg-glow"></div><div class="bg-glow g2"></div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="logo">
-            <div class="logo-icon">PBI</div>
-            <span>AI Tutor</span>
+<header>
+  <div class="brand">
+    <div class="logo-bars"><i></i><i></i><i></i><i></i></div>
+    <div><h1>PBIAI Tutor</h1><div class="sub">Power BI · Interactive AI Tutor</div></div>
+  </div>
+  <div class="head-right">
+    <div class="level-chip"><span class="emo" id="lvlEmoji">🌱</span>
+      <div><div class="lvl-name" id="lvlName">Beginner</div><div class="xp-track"><div class="xp-fill" id="xpFill"></div></div></div>
+      <span class="lvl-pct" id="lvlPct">0% to Data Modeler</span>
+    </div>
+    <button class="gear" id="gearBtn" title="Settings (Ctrl+,)">⚙️<span class="dot" id="gearDot"></span></button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="path"><span class="ic">📚</span>Learning Path</button>
+  <button class="tab" data-tab="chat"><span class="ic">💬</span>Socratic Chat</button>
+  <button class="tab" data-tab="dax"><span class="ic">🛠️</span>DAX Playground</button>
+  <button class="tab" data-tab="lab"><span class="ic">🕵️</span>Troubleshooting Lab</button>
+</nav>
+
+<main>
+<!-- ================= LEARNING PATH ================= -->
+<section id="tab-path" class="tab-panel">
+  <div class="sec-head">
+    <div><div class="kicker">Curriculum</div><h2>Your Power BI Journey</h2>
+      <p>Master Power BI step-by-step with your AI tutor. Each lesson is interactive — the tutor guides you with questions, hands-on checks, and real-world scenarios. Click any lesson to start learning.</p></div>
+    <button class="ghost" id="resetProg">↺ Reset Progress</button>
+  </div>
+  <div class="overview card">
+    <div class="ov-num"><span id="ovPct">0</span><small>%</small></div>
+    <div class="ov-mid"><div class="ov-bar"><div id="ovFill"></div></div>
+      <div class="ov-meta"><span id="ovCount">0 / 24 lessons completed</span><span id="ovXp">0 XP</span></div></div>
+    <div style="font-size:.82rem;color:var(--muted)" id="ovNext">Next milestone: Apprentice 📘 at 200 XP</div>
+  </div>
+  <div id="tiers"></div>
+</section>
+
+<!-- ================= CHAT ================= -->
+<section id="tab-chat" class="tab-panel" hidden>
+  <div class="sec-head">
+    <div><div class="kicker">Socratic Method</div><h2>Ask. Think. Discover.</h2>
+      <p>The tutor won't hand you answers — it will walk you to them, one question at a time.</p></div>
+    <button class="ghost" id="stopSpeak">⏹ Stop Speaking</button>
+  </div>
+  <div class="card chat-wrap chat">
+    <div class="chat-scroll" id="chatScroll"></div>
+    <div class="chips" id="chatChips"></div>
+    <div class="chat-input">
+      <input id="chatIn" type="text" placeholder="Ask about CALCULATE, Row Context, Star Schema…" autocomplete="off">
+      <button class="btn" id="chatSend">Send ➤</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DAX ================= -->
+<section id="tab-dax" class="tab-panel" hidden>
+  <div class="sec-head">
+    <div><div class="kicker">Practice Arena</div><h2>DAX Playground</h2>
+      <p>Try writing a measure. The AI will check your syntax, spot risks, and coach your style.</p></div>
+  </div>
+  <div class="dax-grid">
+    <div class="card dax-editor">
+      <div class="kicker" style="margin-bottom:8px">Challenge</div>
+      <div class="chips" id="daxChips" style="padding:0"></div>
+      <div class="chal-goal" id="chalGoal"></div>
+      <textarea id="daxIn" spellcheck="false"></textarea>
+      <div class="dax-actions">
+        <button class="btn" id="daxEval">⚡ Evaluate &amp; Get Feedback</button>
+        <button class="btn sub" id="daxHint">💡 Hint</button>
+      </div>
+    </div>
+    <div class="card dax-log">
+      <div class="log-head"><h3>🤖 AI Evaluation Log</h3></div>
+      <div id="daxLog"><div class="log-empty" id="logEmpty">Waiting for DAX input…</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAB ================= -->
+<section id="tab-lab" class="tab-panel" hidden>
+  <div class="sec-head">
+    <div><div class="kicker">Case Files</div><h2>Troubleshooting Lab</h2>
+      <p>Real-world broken-report mysteries. Gather clues, form a hypothesis, diagnose the root cause.</p></div>
+  </div>
+  <div class="card case">
+    <div class="stamp">Training Case</div>
+    <div class="case-no" id="caseNo">CASE FILE #1</div>
+    <h3 id="caseTitle">🕵️ Scenario 1: The Disappearing Revenue</h3>
+    <p class="story" id="caseStory"></p>
+    <div class="clues" id="caseClues"></div>
+    <button class="btn sub" id="revealClue">🔍 Reveal next clue</button>
+    <div class="kicker" style="margin:22px 0 4px">Your diagnosis</div>
+    <div class="diag" id="caseOpts"></div>
+    <div class="case-feedback" id="caseFb"></div>
+    <div class="case-foot">
+      <div class="conf">How confident are you? <input type="range" id="confSlide" min="0" max="100" value="50"><b id="confVal">50%</b></div>
+      <button class="btn" id="nextCase">Next Scenario ➔</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>⌨ <kbd>Ctrl</kbd>+<kbd>,</kbd> Settings · <kbd>Esc</kbd> close · Progress auto-saves to this browser · Tutor brain runs 100% locally — nothing leaves your machine.</footer>
+
+<!-- ================= SETTINGS PANEL ================= -->
+<aside id="settingsPanel" aria-label="Settings">
+  <div class="sp-head"><h2>⚙️ Settings</h2><button class="sp-close" id="spClose">✕</button></div>
+  <div class="sp-body">
+
+    <div class="acc open" id="accVoice">
+      <button class="acc-head">🎙️ Tutor Voice <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <input class="voice-search" id="voiceSearch" type="text" placeholder="Search 50 voices… (name or style)">
+        <div class="voice-list" id="voiceList"></div>
+        <div class="voice-foot">
+          <button class="btn sub" id="voicePrev" style="padding:8px 14px;font-size:.82rem">▶ Preview Voice</button>
+          <span class="sel-name">Selected: <b id="selVoiceName">Aria</b></span>
         </div>
+        <div class="set-row" style="margin-top:6px"><div><div class="set-lbl">Voice volume</div><div class="set-sub">Applies to speech &amp; sound effects</div></div></div>
+        <div class="range-row"><input class="sr" type="range" id="volRange" min="0" max="100" value="80"></div>
+      </div></div></div>
+    </div>
 
-        <div class="progress-section">
-            <div style="font-size: 0.9rem; color: #aaa;">Current Level</div>
-            <div style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;" id="levelText">Beginner 🌱</div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="globalProgress"></div>
-            </div>
-            <div style="font-size: 0.8rem; color: #aaa; margin-top: 8px;" id="progressText">0% to Data Modeler</div>
+    <div class="acc" id="accTheme">
+      <button class="acc-head">🎨 Theme <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <div class="theme-grid" id="themeGrid"></div>
+      </div></div></div>
+    </div>
+
+    <div class="acc" id="accSpeed">
+      <button class="acc-head">⏩ Speed <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <div class="range-row">
+          <div class="range-lbl"><span>Typing &amp; speech speed</span><b id="speedVal">1.0×</b></div>
+          <input class="sr" type="range" id="speedRange" min="1" max="10" step="1" value="5">
+          <div class="set-sub" id="speedDesc" style="margin-top:8px">Natural pace — how most tutors speak.</div>
         </div>
+      </div></div></div>
+    </div>
 
-        <ul class="nav-menu">
-            <li class="nav-item active" onclick="switchView('curriculum', this)">📚 Learning Path</li>
-            <li class="nav-item" onclick="switchView('chat', this)">💬 Socratic Chat</li>
-            <li class="nav-item" onclick="switchView('sandbox', this)">🛠️ DAX Playground</li>
-            <li class="nav-item" onclick="switchView('scenario', this)">🕵️ Troubleshooting Lab</li>
-        </ul>
-    </aside>
+    <div class="acc" id="accFlow">
+      <button class="acc-head">📜 Text Flow &amp; Playback <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <div class="set-row"><div><div class="set-lbl">Reveal style</div><div class="set-sub">How tutor messages appear</div></div>
+          <div class="seg" id="segReveal"><button data-v="chars">Chars</button><button data-v="words">Words</button><button data-v="instant">Instant</button></div></div>
+        <div class="set-row"><div><div class="set-lbl">Auto-speak replies</div><div class="set-sub">Read tutor messages aloud</div></div><label class="switch"><input type="checkbox" id="tAutoSpeak" checked><span class="knob"></span></label></div>
+        <div class="set-row"><div><div class="set-lbl">Word highlighting</div><div class="set-sub">Karaoke-style sync while speaking</div></div><label class="switch"><input type="checkbox" id="tHighlight" checked><span class="knob"></span></label></div>
+        <div class="set-row"><div><div class="set-lbl">Auto-scroll chat</div><div class="set-sub">Keep newest message in view</div></div><label class="switch"><input type="checkbox" id="tAutoScroll" checked><span class="knob"></span></label></div>
+        <div class="set-row"><div><div class="set-lbl">Interrupt previous speech</div><div class="set-sub">Cancel old audio when new arrives</div></div><label class="switch"><input type="checkbox" id="tInterrupt" checked><span class="knob"></span></label></div>
+        <div class="set-row"><div><div class="set-lbl">Message density</div></div>
+          <div class="seg" id="segDensity"><button data-v="comfortable">Cozy</button><button data-v="compact">Compact</button></div></div>
+      </div></div></div>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <header class="header">
-            <h1 id="viewTitle">Learning Path — Beginner to Expert</h1>
-            <button class="btn btn-yellow" onclick="resetProgress()">Reset Progress</button>
-        </header>
+    <div class="acc" id="accA11y">
+      <button class="acc-head">♿ Accessibility &amp; Sound <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <div class="set-row"><div><div class="set-lbl">Text size</div></div>
+          <div class="seg" id="segFont"><button data-v="90">S</button><button data-v="100">M</button><button data-v="112">L</button><button data-v="126">XL</button></div></div>
+        <div class="set-row"><div><div class="set-lbl">Reduce motion</div><div class="set-sub">Disable animations &amp; typing effects</div></div><label class="switch"><input type="checkbox" id="tMotion"><span class="knob"></span></label></div>
+        <div class="set-row"><div><div class="set-lbl">Interface sounds</div><div class="set-sub">Clicks, chimes and error buzzes</div></div><label class="switch"><input type="checkbox" id="tSounds" checked><span class="knob"></span></label></div>
+      </div></div></div>
+    </div>
 
-        <div class="workspace">
-            
-            <!-- VIEW 1: Curriculum / Contents -->
-            <div id="view-curriculum" class="view active">
-                <div class="curriculum-container">
-                    <div class="curriculum-header">
-                        <h2>🎓 Your Power BI Journey</h2>
-                        <p>Master Power BI step-by-step with your AI tutor. Each lesson is interactive — the tutor will guide you with questions, hands-on exercises, and real-world scenarios. Click any lesson to start learning.</p>
-                    </div>
-
-                    <!-- BEGINNER -->
-                    <div class="level-section">
-                        <div class="level-header">
-                            <div class="level-title">
-                                <span class="level-badge badge-beginner">BEGINNER</span>
-                                <h3>Foundations & First Reports</h3>
-                            </div>
-                            <div class="level-progress" id="progress-beginner">0 / 6 completed</div>
-                        </div>
-                        <div class="lessons-grid" id="lessons-beginner"></div>
-                    </div>
-
-                    <!-- INTERMEDIATE -->
-                    <div class="level-section">
-                        <div class="level-header">
-                            <div class="level-title">
-                                <span class="level-badge badge-intermediate">INTERMEDIATE</span>
-                                <h3>Data Modeling & DAX</h3>
-                            </div>
-                            <div class="level-progress" id="progress-intermediate">0 / 6 completed</div>
-                        </div>
-                        <div class="lessons-grid" id="lessons-intermediate"></div>
-                    </div>
-
-                    <!-- ADVANCED -->
-                    <div class="level-section">
-                        <div class="level-header">
-                            <div class="level-title">
-                                <span class="level-badge badge-advanced">ADVANCED</span>
-                                <h3>Advanced Analytics & Optimization</h3>
-                            </div>
-                            <div class="level-progress" id="progress-advanced">0 / 6 completed</div>
-                        </div>
-                        <div class="lessons-grid" id="lessons-advanced"></div>
-                    </div>
-
-                    <!-- EXPERT -->
-                    <div class="level-section">
-                        <div class="level-header">
-                            <div class="level-title">
-                                <span class="level-badge badge-expert">EXPERT</span>
-                                <h3>Enterprise & Architecture</h3>
-                            </div>
-                            <div class="level-progress" id="progress-expert">0 / 6 completed</div>
-                        </div>
-                        <div class="lessons-grid" id="lessons-expert"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- VIEW 2: Socratic Chat -->
-            <div id="view-chat" class="view">
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="message ai">
-                            👋 Welcome! I'm your Power BI AI Tutor. Instead of just giving you answers, I'm going to help you <b>discover</b> them. <br><br>
-                            What concept are we tackling today? (e.g., <code style="background:#e1dfdd; padding:2px 5px; border-radius:4px;">CALCULATE</code>, Row Context, Star Schema)
-                        </div>
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chatInput" placeholder="Ask a question or type your answer..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- VIEW 3: DAX Sandbox -->
-            <div id="view-sandbox" class="view">
-                <div class="sandbox-grid">
-                    <div class="panel">
-                        <h3>DAX Formula Builder</h3>
-                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Try writing a measure. The AI will check your syntax and context!</p>
-                        <textarea class="dax-editor" id="daxEditor" placeholder="Total Sales = &#10;SUM(Sales[Amount])"></textarea>
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <button class="btn btn-primary" onclick="evaluateDAX()">Evaluate & Get Feedback</button>
-                            <button class="btn btn-outline" onclick="showHint()">💡 Hint</button>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <h3>AI Evaluation Log</h3>
-                        <div class="output-log" id="outputLog">
-                            <div class="log-entry" style="color: #666;">Waiting for DAX input...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- VIEW 4: Scenario Lab -->
-            <div id="view-scenario" class="view">
-                <div class="scenario-card">
-                    <h2 id="scenarioTitle" style="margin-bottom: 20px;">🕵️ Scenario 1: The Disappearing Revenue</h2>
-                    <div class="scenario-prompt" id="scenarioPrompt">
-                        Loading scenario...
-                    </div>
-
-                    <div class="confidence-meter">
-                        <label>How confident are you?</label>
-                        <input type="range" min="0" max="100" value="50" id="confidenceSlider">
-                        <span id="confidenceValue">50%</span>
-                    </div>
-
-                    <div class="choices" id="scenarioChoices"></div>
-
-                    <div class="feedback-box" id="feedbackBox"></div>
-                    
-                    <div class="scenario-footer" id="scenarioFooter">
-                        <button class="btn btn-primary" onclick="nextScenario()">Next Scenario ➔</button>
-                    </div>
-                </div>
-            </div>
-
+    <div class="acc" id="accData">
+      <button class="acc-head">💾 Data <span class="chev">▾</span></button>
+      <div class="acc-body"><div class="acc-inner"><div class="acc-pad">
+        <div class="set-sub">Settings &amp; progress auto-save to this browser (localStorage).</div>
+        <div class="data-btns">
+          <button id="btnExport">⬇ Export settings</button>
+          <button id="btnImport">⬆ Import settings</button>
+          <button id="btnResetSet" class="danger">Reset settings</button>
+          <button id="btnResetProg2" class="danger">Reset progress</button>
         </div>
-    </main>
+        <input type="file" id="importFile" accept=".json" hidden>
+      </div></div></div>
+    </div>
 
-    <script>
-        // --- Curriculum Data ---
-        const curriculum = {
-            beginner: [
-                { id: 'b1', icon: '🚀', title: 'Getting Started with Power BI', desc: 'Install, interface tour, and your first report in 10 minutes.', duration: '15 min', topic: 'power bi basics' },
-                { id: 'b2', icon: '📊', title: 'Importing Your First Data', desc: 'Connect to Excel, CSV, and web sources. Understand Get Data.', duration: '20 min', topic: 'get data power bi' },
-                { id: 'b3', icon: '🔍', title: 'Power Query Essentials', desc: 'Clean, transform, and shape data before it hits the model.', duration: '30 min', topic: 'power query transformations' },
-                { id: 'b4', icon: '🔗', title: 'Tables vs. Measures', desc: 'The fundamental difference that every beginner must grasp.', duration: '20 min', topic: 'tables vs measures' },
-                { id: 'b5', icon: '📈', title: 'Building Your First Visuals', desc: 'Bar charts, cards, and slicers — the building blocks.', duration: '25 min', topic: 'power bi visuals' },
-                { id: 'b6', icon: '🎨', title: 'Formatting & Publishing', desc: 'Make reports beautiful and share them with your team.', duration: '20 min', topic: 'power bi formatting publish' }
-            ],
-            intermediate: [
-                { id: 'i1', icon: '⭐', title: 'Star Schema Design', desc: 'Why facts and dimensions are the backbone of great models.', duration: '35 min', topic: 'star schema power bi' },
-                { id: 'i2', icon: '🔀', title: 'Relationships Deep Dive', desc: '1:many, many:many, active vs. inactive, cross-filter direction.', duration: '40 min', topic: 'power bi relationships' },
-                { id: 'i3', icon: '🧮', title: 'DAX Fundamentals', desc: 'SUM, AVERAGE, COUNT — and the magic of aggregation.', duration: '30 min', topic: 'dax fundamentals' },
-                { id: 'i4', icon: '🎯', title: 'Mastering CALCULATE', desc: 'The most important function in DAX — explained properly.', duration: '45 min', topic: 'calculate dax' },
-                { id: 'i5', icon: '🔄', title: 'Time Intelligence', desc: 'YTD, QTD, Same Period Last Year — the business essentials.', duration: '40 min', topic: 'time intelligence dax' },
-                { id: 'i6', icon: '📅', title: 'Date Tables Done Right', desc: 'Why you need one and how to build a bulletproof version.', duration: '25 min', topic: 'date table power bi' }
-            ],
-            advanced: [
-                { id: 'a1', icon: '🧠', title: 'Context Transition', desc: 'The concept that separates intermediates from experts.', duration: '50 min', topic: 'context transition dax' },
-                { id: 'a2', icon: '🔁', title: 'Iterator Functions', desc: 'SUMX, AVERAGEX, and row-by-row mastery.', duration: '40 min', topic: 'iterator functions dax' },
-                { id: 'a3', icon: '📐', title: 'Virtual Relationships', desc: 'USERELATIONSHIP, TREATAS, and dynamic modeling.', duration: '45 min', topic: 'userelationship treatas' },
-                { id: 'a4', icon: '⚡', title: 'Performance Tuning', desc: 'Query folding, DAX Studio, and VertiPaq analyzer.', duration: '50 min', topic: 'power bi performance' },
-                { id: 'a5', icon: '🎭', title: 'Calculation Groups', desc: 'Write once, apply everywhere — time savings at scale.', duration: '40 min', topic: 'calculation groups' },
-                { id: 'a6', icon: '🔐', title: 'Row-Level Security', desc: 'Dynamic RLS with USERPRINCIPALNAME and user tables.', duration: '35 min', topic: 'row level security' }
-            ],
-            expert: [
-                { id: 'e1', icon: '🏗️', title: 'Enterprise Data Models', desc: 'Composite models, aggregations, and DirectQuery at scale.', duration: '60 min', topic: 'composite models power bi' },
-                { id: 'e2', icon: '🔧', title: 'Tabular Editor & ALM', desc: 'Professional deployment pipelines and source control.', duration: '50 min', topic: 'tabular editor alm' },
-                { id: 'e3', icon: '🤖', title: 'AI Visuals & Copilot', desc: 'Leverage built-in AI, custom visuals, and Microsoft Copilot.', duration: '45 min', topic: 'power bi ai copilot' },
-                { id: 'e4', icon: '🌐', title: 'Power BI Service Architecture', desc: 'Workspaces, apps, gateways, and governance at scale.', duration: '55 min', topic: 'power bi service governance' },
-                { id: 'e5', icon: '📡', title: 'Fabric & OneLake Integration', desc: 'The future of Microsoft analytics — real-world patterns.', duration: '60 min', topic: 'microsoft fabric oneLake' },
-                { id: 'e6', icon: '🏆', title: 'Capstone: End-to-End Solution', desc: 'Build a complete enterprise solution from raw data to app.', duration: '120 min', topic: 'end to end power bi solution' }
-            ]
-        };
+  </div>
+</aside>
 
-        // Track completed lessons
-        let completedLessons = new Set();
+<div id="modalWrap"><div class="modal" id="modalBox"></div></div>
+<div id="toasts"></div>
 
-        // --- Navigation ---
-        function switchView(viewId, element) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('view-' + viewId).classList.add('active');
-            
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            element.classList.add('active');
+<script>
+/* ================================================================
+   PBIAI TUTOR — fully local simulation. No network, no API keys.
+   ================================================================ */
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
-            const titles = {
-                'curriculum': 'Learning Path — Beginner to Expert',
-                'chat': 'Socratic Learning Chat',
-                'sandbox': 'Interactive DAX Playground',
-                'scenario': 'Troubleshooting Lab'
-            };
-            document.getElementById('viewTitle').innerText = titles[viewId];
-        }
+/* ---------- VOICES (50 personas → layered on browser TTS) ---------- */
+const VOICES=[
+["Aria","Warm & encouraging",1.08,1.00],["Atlas","Calm & authoritative",0.82,0.94],["Nova","Bright & energetic",1.25,1.12],["Orion","Deep & thoughtful",0.70,0.90],["Luna","Soft & patient",1.15,0.88],
+["Max","Friendly coach",0.95,1.05],["Sage","Wise mentor",0.88,0.92],["Pip","Playful & quick",1.30,1.18],["Professor Dax","Academic & precise",0.90,0.90],["Coach Kim","Motivational",1.05,1.10],
+["Ivy","Crisp & clear",1.10,1.00],["Rex","Confident & direct",0.78,1.02],["Willow","Gentle & steady",1.12,0.92],["Hank","Easygoing",0.92,0.98],["Zara","Sharp & witty",1.18,1.08],
+["Finn","Curious explorer",1.02,1.06],["Greta","No-nonsense",0.98,1.04],["Milo","Cheerful sidekick",1.22,1.10],["Freya","Soothing storyteller",1.06,0.90],["Bruno","Solid & dependable",0.80,0.96],
+["Cleo","Elegant & measured",1.04,0.94],["Dash","Fast & focused",0.96,1.20],["Echo","Quietly brilliant",1.00,0.86],["Otis","Jovial veteran",0.86,0.95],["Pearl","Polished presenter",1.09,0.99],
+["Quinn","Neutral & balanced",1.00,1.00],["Ravi","Patient explainer",0.94,0.93],["Skye","Light & optimistic",1.20,1.05],["Theo","Thoughtful tutor",0.90,0.97],["Uma","Steady & reassuring",1.02,0.91],
+["Vega","Vivid & dramatic",1.14,1.03],["Wes","Laid-back buddy",0.88,1.00],["Xena","Bold strategist",1.00,1.08],["Yuri","Quietly intense",0.92,0.89],["Bea","Bubbly beginner-friendly",1.28,1.07],
+["Cyrus","Data storyteller",0.84,0.98],["Dotty","Precise bookkeeper",1.06,0.96],["Egon","Methodical engineer",0.78,0.92],["Faye","Dreamy & curious",1.16,0.95],["Gus","Gruff but kind",0.72,0.94],
+["Hana","Serene & minimal",1.08,0.90],["Ivo","Energetic analyst",0.98,1.12],["Joss","Pragmatic fixer",0.94,1.02],["Kira","Keen & quick",1.19,1.09],["Lior","Patient navigator",1.00,0.93],
+["Mona","Measured & warm",1.05,0.95],["Nils","Logical minimalist",0.90,0.99],["Opal","Golden-hour calm",1.11,0.88],["Priya","Insightful guide",1.03,0.97],["Zed","Zen master",0.80,0.85]];
+const SPEEDS=[0.5,0.65,0.75,0.85,1,1.15,1.3,1.5,1.75,2];
+const THEMES=[["gold","Power Gold","#0d1117","#f2c811"],["light","Daylight","#f2f4f8","#c99700"],["ocean","Ocean Depth","#061826","#2fd4ff"],["forest","Forest","#0a1712","#3ddc97"],["sunset","Sunset","#1c1016","#ff8f4d"],["royal","Royal Violet","#120f24","#a78bfa"],["contrast","High Contrast","#000000","#ffe600"],["paper","Warm Paper","#f6f1e7","#b45309"],["crimson","Crimson","#170b10","#fb4d6d"],["terminal","Terminal","#0b0f0c","#46e07c"]];
 
-        // --- Render Curriculum ---
-        function renderCurriculum() {
-            Object.keys(curriculum).forEach(level => {
-                const container = document.getElementById('lessons-' + level);
-                container.innerHTML = '';
-                let completedCount = 0;
+/* ---------- SETTINGS / PROGRESS STATE ---------- */
+const DEF_SETTINGS={voice:0,volume:80,speedIdx:4,theme:"gold",reveal:"chars",autoSpeak:true,highlight:true,autoScroll:true,interrupt:true,density:"comfortable",fontScale:100,reduceMotion:false,sounds:true};
+let settings={...DEF_SETTINGS};
+let progress={lessons:{},xp:0,scenarios:{},daxDraft:"",lastChallenge:0};
+try{const s=localStorage.getItem("pbai.settings.v1");if(s)settings={...DEF_SETTINGS,...JSON.parse(s)};}catch(e){}
+try{const p=localStorage.getItem("pbai.progress.v1");if(p)progress={...progress,...JSON.parse(p)};}catch(e){}
+const saveSet=()=>{try{localStorage.setItem("pbai.settings.v1",JSON.stringify(settings))}catch(e){}};
+const saveProg=()=>{try{localStorage.setItem("pbai.progress.v1",JSON.stringify(progress))}catch(e){}};
+let interacted=false;
+addEventListener("pointerdown",()=>interacted=true,{once:true});
+addEventListener("keydown",()=>interacted=true,{once:true});
 
-                curriculum[level].forEach(lesson => {
-                    const isCompleted = completedLessons.has(lesson.id);
-                    if (isCompleted) completedCount++;
+/* ---------- SOUND ENGINE ---------- */
+let AC=null;
+function tone(f,dur=0.08,type="sine",delay=0){
+  if(!settings.sounds||settings.volume===0)return;
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+delay;
+    o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.14*(settings.volume/100),t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur+0.05);}catch(e){}
+}
+const sfx={click:()=>tone(520,.05,"triangle"),tab:()=>tone(660,.06,"sine"),
+  ok:()=>{tone(660,.09);tone(880,.12,"sine",.09)},err:()=>tone(170,.16,"sawtooth"),
+  pop:()=>tone(440,.05,"triangle"),lvl:()=>{[523,659,784,1046].forEach((f,i)=>tone(f,.14,"sine",i*.1))}};
 
-                    const card = document.createElement('div');
-                    card.className = 'lesson-card' + (isCompleted ? ' completed' : '');
-                    card.onclick = () => startLesson(lesson);
-                    
-                    card.innerHTML = `
-                        ${isCompleted ? '<div class="check-mark">✓</div>' : ''}
-                        <div class="lesson-icon">${lesson.icon}</div>
-                        <div class="lesson-title">${lesson.title}</div>
-                        <div class="lesson-desc">${lesson.desc}</div>
-                        <div class="lesson-meta">
-                            <span>⏱️ ${lesson.duration}</span>
-                            <span class="lesson-status ${isCompleted ? 'status-done' : 'status-new'}">
-                                ${isCompleted ? 'Completed' : 'Start Lesson'}
-                            </span>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+/* ---------- SPEECH ---------- */
+const hasTTS="speechSynthesis"in window;
+let sysVoices=[];
+function loadSysVoices(){if(hasTTS)sysVoices=speechSynthesis.getVoices();}
+loadSysVoices();if(hasTTS)speechSynthesis.onvoiceschanged=loadSysVoices;
+const hashStr=s=>{let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h};
+function speak(text,{rateMod=1,pitchMod=1,boundaryCb=null}={}){
+  if(!hasTTS||settings.volume===0)return;
+  if(settings.interrupt)speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const p=VOICES[settings.voice]||VOICES[0];
+  u.pitch=clamp(p[2]*pitchMod,0,2);u.rate=clamp(p[3]*SPEEDS[settings.speedIdx]*rateMod,0.5,2.6);
+  u.volume=clamp(settings.volume/100,0,1);
+  if(sysVoices.length)u.voice=sysVoices[hashStr(p[0])%sysVoices.length];
+  if(boundaryCb)u.onboundary=e=>{if(e.name==="word"||e.charIndex!==undefined)boundaryCb(e.charIndex)};
+  speechSynthesis.speak(u);
+}
+const stopSpeech=()=>{if(hasTTS)speechSynthesis.cancel()};
 
-                document.getElementById('progress-' + level).innerText = 
-                    `${completedCount} / ${curriculum[level].length} completed`;
-            });
-        }
+/* ---------- TYPEWRITER ---------- */
+let typeToken=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function typeInto(el,text,mode){
+  const my=++typeToken;
+  if(settings.reduceMotion)mode="instant";
+  const speed=SPEEDS[settings.speedIdx];
+  if(mode==="instant"){el.textContent=text;return;}
+  el.textContent="";
+  if(mode==="chars"){
+    const delay=22/speed;
+    for(let i=0;i<text.length;i++){if(my!==typeToken)return;el.textContent+=text[i];
+      if(text[i]!==" ")await sleep(delay);if(i%3===0)await sleep(0);}
+  }else{ // words
+    const parts=text.split(/(\s+)/);let acc="";
+    const wDelay=clamp(320/(speed),40,800);
+    for(const tok of parts){if(my!==typeToken)return;
+      if(/^\s+$/.test(tok)){el.textContent+=tok;acc+=tok;}
+      else{const s=document.createElement("span");s.className="w";s.textContent=tok;s.dataset.start=acc.length;el.appendChild(s);acc+=tok;await sleep(wDelay);}
+    }
+  }
+}
+function highlightAt(el,charIndex){
+  const ws=el.querySelectorAll(".w");if(!ws.length)return;
+  let target=null;
+  ws.forEach(w=>{const st=+w.dataset.start;if(st<=charIndex)target=w;});
+  ws.forEach(w=>w.classList.remove("hl"));
+  if(target)target.classList.add("hl");
+}
 
-        // --- Start a Lesson (launches AI tutor with context) ---
-        function startLesson(lesson) {
-            // Switch to chat view
-            const chatNav = document.querySelectorAll('.nav-item')[1];
-            switchView('chat', chatNav);
+/* ---------- TOASTS ---------- */
+function toast(msg,sub="",cls=""){
+  const t=document.createElement("div");t.className="toast "+cls;
+  t.innerHTML=`<div>${msg}${sub?`<small>${sub}</small>`:""}</div>`;
+  $("#toasts").appendChild(t);
+  setTimeout(()=>{t.style.transition=".4s";t.style.opacity="0";t.style.transform="translateX(120%)";setTimeout(()=>t.remove(),400)},3400);
+}
 
-            // Clear chat and inject lesson context
-            const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML = '';
+/* ---------- LEVELS / XP ---------- */
+const LEVELS=[[0,"Beginner","🌱"],[200,"Apprentice","📘"],[500,"Analyst","⚡"],[900,"Modeler","🧩"],[1500,"DAX Wizard","🧮"],[2200,"Data Modeler","🏆"]];
+function levelFor(xp){let cur=LEVELS[0];for(const L of LEVELS)if(xp>=L[0])cur=L;return cur;}
+function addXP(n,reason){
+  const before=levelFor(progress.xp);
+  progress.xp+=n;saveProg();
+  const after=levelFor(progress.xp);
+  toast(`+${n} XP`,reason,"xp");sfx.pop();
+  if(after[0]>before[0]){toast(`Level up — ${after[1]} ${after[2]}`,"Keep going!", "lvl");sfx.lvl();}
+  updateProgress();
+}
+function updateProgress(){
+  const done=Object.keys(progress.lessons).length, pct=Math.round(done/24*100);
+  $("#ovPct").textContent=pct;$("#ovFill").style.width=pct+"%";
+  $("#ovCount").textContent=`${done} / 24 lessons completed`;$("#ovXp").textContent=`${progress.xp} XP`;
+  const lvl=levelFor(progress.xp);$("#lvlEmoji").textContent=lvl[2];$("#lvlName").textContent=lvl[1];
+  $("#xpFill").style.width=clamp(progress.xp/2200*100,0,100)+"%";
+  $("#lvlPct").textContent=progress.xp>=2200?"Data Modeler achieved! 🏆":`${Math.floor(progress.xp/2200*100)}% to Data Modeler`;
+  const next=LEVELS.find(L=>L[0]>progress.xp);
+  $("#ovNext").textContent=next?`Next milestone: ${next[1]} ${next[2]} at ${next[0]} XP`:"🏆 Maximum level reached — legendary!";
+  TIERS.forEach((t,i)=>{const c=t.ids.filter(id=>progress.lessons[id]).length;const el=$("#tc"+i);if(el)el.textContent=`${c} / 6 completed`;});
+  $$(".lesson").forEach(el=>{const id=el.dataset.id;el.classList.toggle("done",!!progress.lessons[id]);
+    el.querySelector(".num").textContent=progress.lessons[id]?"✓":el.dataset.n;});
+}
 
-            const intro = `📘 <b>Starting Lesson:</b> ${lesson.icon} ${lesson.title}<br><br>` +
-                          `<i>${lesson.desc}</i><br><br>` +
-                          `Let's begin! To make sure this sticks, I'll guide you with questions rather than just lecturing.<br><br>` +
-                          `<b>First question:</b> Before we dive in, what do you already know about <b>${lesson.topic}</b>? Even a one-word answer helps me calibrate.`;
-            
-            appendMessage(intro, 'ai');
+/* ---------- LESSON DATA (24) ---------- */
+const TIERS=[
+ {badge:"BEGINNER",cls:"t0",name:"Foundations & First Reports",ids:["b1","b2","b3","b4","b5","b6"]},
+ {badge:"INTERMEDIATE",cls:"t1",name:"Data Modeling & DAX",ids:["i1","i2","i3","i4","i5","i6"]},
+ {badge:"ADVANCED",cls:"t2",name:"Advanced Analytics & Optimization",ids:["a1","a2","a3","a4","a5","a6"]},
+ {badge:"EXPERT",cls:"t3",name:"Enterprise & Architecture",ids:["e1","e2","e3","e4","e5","e6"]}];
+const LESSONS={
+b1:{t:"Touring Power BI Desktop",m:8,teach:["Everything starts in Power BI Desktop: the Report Canvas where visuals live, the Fields pane with your data, and the Visualizations pane with chart types.","The ribbon exposes Home, Modeling and View tabs — each with focused powers. Knowing where things live saves hours."],q:"You want to change what a bar chart's colors represent. Which field bucket do you use?",o:["Values","Legend","Axis","Tooltips"],a:1,why:"Legend splits bars into color-coded series. Values holds what is measured; Axis holds categories.",chat:null},
+b2:{t:"Get Data: Your First Connection",m:9,teach:["Get Data opens a gallery of connectors — Excel, SQL Server, SharePoint, the web, and hundreds more.","The key decision: Load vs Transform Data. Transform opens Power Query, where you clean and shape data before it ever enters the model."],q:"You receive a messy export with junk rows and split columns. Best first move?",o:["Load it and fix it in DAX","Choose Transform Data to open Power Query","Delete the file and ask for a new one","Import it straight into a visual"],a:1,why:"Power Query is built for shaping messy data — it records every step and re-applies it on refresh.",chat:null},
+b3:{t:"Building Your First Visual",m:9,teach:["Pick a visual type first, then drag fields into its buckets — Axis, Values, Legend. Power BI aggregates numbers automatically.","Match the visual to the question: lines for trends, bars for comparisons, maps for geography."],q:"Which visual best shows revenue trending over 12 months?",o:["Card","Line chart","Pie chart","Gauge"],a:1,why:"Line charts are purpose-built for continuous change over time.",chat:null},
+b4:{t:"Filters & Slicers",m:8,teach:["Filters can act at visual, page, or report level. Slicers are filters that live on the canvas for users to play with.","Slicers make exploration self-service — a date slicer plus a category slicer answers most first questions."],q:"What's the main difference between a slicer and a filter-pane filter?",o:["Slicers run faster","Slicers are visible on the canvas for end-users","Filter-pane filters only work on numbers","Slicers only work with dates"],a:1,why:"Slicers invite interaction directly on the report; filter-pane filters are often behind the scenes.",chat:null},
+b5:{t:"Formatting for Clarity",m:7,teach:["Great reports are edited reports: remove what doesn't earn its place, then format what remains.","Titles, consistent colors and sensible sorting do more than decorate — they guide the eye to the answer."],q:"Your report feels cluttered. What's the best first fix?",o:["Add more colors","Remove visuals that don't answer a question","Make every visual bigger","Add five more slicers"],a:1,why:"Decluttering is the highest-leverage formatting move there is.",chat:null},
+b6:{t:"Publish to Power BI Service",m:7,teach:["Publish sends your .pbix to a workspace in the Power BI Service — the browser home for sharing.","From there you build apps, schedule refreshes and share with colleagues, all with permissions you control."],q:"After publishing, where do colleagues typically view the report?",o:["Power BI Desktop","Power BI Service","Excel","A USB drive"],a:1,why:"The Service is Power BI's collaboration and sharing layer.",chat:null},
+i1:{t:"Star Schema Thinking",m:12,teach:["Model data as facts (tables of events with numbers — sales, visits, shipments) and dimensions (tables that describe — customers, products, dates).","A star schema keeps relationships simple and mostly 1-to-many, which makes DAX easier and queries faster."],q:"Which of these is a fact table?",o:["DimProduct","DimCustomer","Sales","DimDate"],a:2,why:"Sales records events with measurable amounts — classic fact territory.",chat:"star"},
+i2:{t:"Relationships & Cardinality",m:11,teach:["Relationships connect dimension keys to fact foreign keys — usually one-to-many with single-direction filter flow.","Inactive relationships appear as dotted lines; filters can't travel until they're activated or USERELATIONSHIP is used."],q:"What's the typical relationship between DimProduct and Sales?",o:["Many-to-many, both directions","One-to-many, single direction","One-to-one","No relationship needed"],a:1,why:"One product row relates to many sales rows; filters flow from the one side to the many.",chat:"calculate"},
+i3:{t:"CALCULATE & Filter Context",m:14,teach:["CALCULATE evaluates an expression in a modified filter context — the only function that can change context like this.","Each filter argument adds or overrides context: CALCULATE(SUM(Sales[Amount]), Sales[Region]=\"East\") sees East only."],q:"What does CALCULATE(SUM(Sales[Amount]), Sales[Region]=\"East\") return?",o:["All sales, unchanged","Sales for the East region only","The count of regions","An error"],a:1,why:"The filter argument reshapes context so the sum sees only East rows.",chat:"calculate"},
+i4:{t:"Row Context & Iterators",m:11,teach:["Row context lets expressions evaluate one row at a time. Iterators like SUMX walk a table row by row.","Pattern: SUMX(Sales, Sales[Qty] * Sales[Price]) multiplies per row then sums — something SUM alone can't do across columns."],q:"Which function creates row context by iterating a table?",o:["SUM","SUMX","ALL","DIVIDE"],a:1,why:"X-functions iterate — each pass sees exactly one row.",chat:"rowcontext"},
+i5:{t:"Time Intelligence",m:12,teach:["TOTALYTD, SAMEPERIODLASTYEAR and friends need a proper date table: contiguous dates, one row per day, marked as the date table.","Once that's in place, time intelligence becomes a set of simple one-liners layered on your base measures."],q:"What's essential before time intelligence works reliably?",o:["A Premium capacity","A marked date table with contiguous dates","Bidirectional relationships","A pie chart"],a:1,why:"Time intelligence functions walk the marked, contiguous date table.",chat:"time"},
+i6:{t:"Measures vs Calculated Columns",m:9,teach:["Measures compute at query time, live in the model, and shine with aggregations. Calculated columns compute row-by-row and get stored.","Rule of thumb: aggregations and ratios → measure. Per-row attributes you slice by → column."],q:"'Revenue per customer' is best built as a…",o:["Calculated column","Measure","New table","Visual title"],a:1,why:"It's a ratio of aggregates — measures compute on demand and respect filters.",chat:"msvc"},
+a1:{t:"Advanced DAX Patterns",m:13,teach:["Variables (VAR / RETURN) make DAX readable and faster by computing once. Patterns like % of total combine CALCULATE with ALL.","DIVIDE(num, den) is the safe division: it returns BLANK instead of an error when the denominator is zero."],q:"Why is DIVIDE(a, b) preferred over a / b?",o:["It's faster to type","It handles divide-by-zero gracefully","It rounds results","It only works in tables"],a:1,why:"DIVIDE returns BLANK instead of an error when the denominator is zero.",chat:"allfn"},
+a2:{t:"Performance & Query Folding",m:11,teach:["Performance Analyzer records how long each visual takes and where time goes — DAX, visual display, or the query itself.","Query folding pushes transformations back to the source; when it breaks, Power Query does the work locally instead."],q:"A visual takes 9 seconds. Which tool diagnoses it first?",o:["Task Manager","Performance Analyzer","Excel","Format Painter"],a:1,why:"Performance Analyzer breaks down duration per visual, per phase.",chat:"perf"},
+a3:{t:"Calculation Groups",m:11,teach:["Calculation groups apply shared logic — YTD, prior year, % change — to any measure dynamically, killing measure explosion.","Authored with Tabular Editor, they appear as a field users can slice by."],q:"What problem do calculation groups solve best?",o:["Color palettes","Applying common time calculations across many measures","Row-level security","Publish schedules"],a:1,why:"One calculation item (say YTD) applies to every measure — no duplication.",chat:"time"},
+a4:{t:"Row-Level Security",m:11,teach:["RLS restricts rows per viewer with DAX filters on tables, enforced through roles. Service viewers see only their slice.","Always validate with 'View as' in Desktop before publishing."],q:"RLS primarily restricts…",o:["Which columns load","Which rows a given user can see","Which visuals render","The refresh schedule"],a:1,why:"RLS is row filtering by role — columns and visuals stay intact.",chat:"rls"},
+a5:{t:"Composite Models & Aggregations",m:12,teach:["Composite models blend Import and DirectQuery tables in one model. Aggregation tables cache summaries for DirectQuery at scale.","Power BI hits the fast cache first, falling back to the source for detail — users just notice speed."],q:"What's the main benefit of aggregation tables?",o:["Smaller .pbix files","Fast queries over huge DirectQuery models via cached summaries","More colors","Automatic DAX writing"],a:1,why:"Cached summaries answer common queries without touching the full source.",chat:"perf"},
+a6:{t:"Storytelling with Data",m:9,teach:["Reports answer questions; stories drive decisions. Bookmarks capture view states so you can walk viewers through a narrative.","Drillthrough pages let users right-click into detail exactly when they ask 'why?'"],q:"Which feature builds a guided, step-by-step narrative in one report?",o:["Bookmarks","Table borders","Grid layout","Color themes"],a:0,why:"Bookmarks capture and sequence views — perfect for guided walkthroughs.",chat:null},
+e1:{t:"Deployment Pipelines & ALM",m:11,teach:["Pipelines model Dev → Test → Prod, deploying content between stages with rules for connection strings and parameters.","It's ALM for Power BI: safer changes, clearer promotion paths."],q:"Deployment pipelines primarily manage…",o:["Data refresh timing","Moving content across lifecycle stages","User training","Color palettes"],a:1,why:"They promote content between stages with controlled rules.",chat:null},
+e2:{t:"Dataflows & Datamarts",m:11,teach:["Dataflows centralize reusable ETL logic in the Service, refreshed independently of any report.","Multiple reports consume one curated flow — consistency by design."],q:"The primary benefit of dataflows is…",o:["Faster rendering","Reusable, centralized data prep shared across reports","Better DAX","More chart types"],a:1,why:"Prepare once, reuse everywhere — consistent definitions.",chat:null},
+e3:{t:"Security Architecture at Scale",m:11,teach:["Layer security: workspace roles (Admin / Member / Contributor / Viewer), item permissions, RLS, plus tenant-level controls.","Least privilege first: Viewer is the strictest built-in workspace role."],q:"Which workspace role is most restrictive for consumers?",o:["Admin","Member","Viewer","Contributor"],a:2,why:"Viewer can see content but can't edit or broadly reshare.",chat:"rls"},
+e4:{t:"Governance & Monitoring",m:10,teach:["The Admin portal holds tenant settings — the master switches for what an organization allows.","Monitoring (metrics apps, logs, lineage) turns governance from policy into practice."],q:"Where do tenant-wide Power BI controls live?",o:["Report settings","Admin portal tenant settings","Power Query","The visual format pane"],a:1,why:"Tenant settings are the top-level governance switches.",chat:null},
+e5:{t:"Premium Capacity & Performance",m:11,teach:["Premium delivers dedicated capacity measured in CUs; when demand exceeds it, jobs queue or throttle.","The Capacity Metrics app shows consumption patterns so you can tune or scale before users feel pain."],q:"The Capacity Metrics app reveals…",o:["Report colors","CU consumption and throttling over time","User passwords","DAX syntax errors"],a:1,why:"It tracks capacity pressure — the root of slow refreshes and visuals.",chat:"perf"},
+e6:{t:"Fabric & Future-Proofing",m:11,teach:["Microsoft Fabric unifies analytics around OneLake. Direct Lake reads lake data directly — import-like speed without duplication.","Planning today's models with Fabric in mind protects tomorrow's investment."],q:"Direct Lake's key advantage is…",o:["Offline editing","Import-like performance over lake data without copying it","More slicers","Faster typing"],a:1,why:"Direct Lake gives fast queries over OneLake data without duplicating it.",chat:null}};
 
-            // Store current lesson topic for contextual responses
-            currentLessonTopic = lesson.topic;
-            currentLessonTitle = lesson.title;
-            currentLessonId = lesson.id;
-        }
+function renderPath(){
+  const wrap=$("#tiers");wrap.innerHTML="";
+  TIERS.forEach((tier,ti)=>{
+    const block=document.createElement("div");block.className="tier";
+    block.innerHTML=`<div class="tier-head"><span class="tier-badge ${tier.cls}">${tier.badge}</span><h3>${tier.name}</h3><span class="tier-count" id="tc${ti}">0 / 6 completed</span></div>`;
+    const grid=document.createElement("div");grid.className="lessons-grid";
+    tier.ids.forEach((id,li)=>{
+      const L=LESSONS[id];
+      const b=document.createElement("button");b.className="lesson";b.dataset.id=id;b.dataset.n=li+1;
+      b.innerHTML=`<span class="num">${li+1}</span><span><span class="lt">${L.t}</span><div class="lm">⏱ ${L.m} min · +60 XP${progress.lessons[id]?" · ✓ done":""}</div></span>`;
+      b.addEventListener("click",()=>{sfx.click();openLesson(id);});
+      grid.appendChild(b);
+    });
+    block.appendChild(grid);wrap.appendChild(block);
+  });
+}
 
-        let currentLessonTopic = '';
-        let currentLessonTitle = '';
-        let currentLessonId = '';
+/* ---------- LESSON MODAL ---------- */
+function openLesson(id){
+  const L=LESSONS[id];const tierIdx=TIERS.findIndex(t=>t.ids.includes(id));const tier=TIERS[tierIdx];
+  const box=$("#modalBox");
+  box.innerHTML=`
+    <span class="m-tier tier-badge ${tier.cls}">${tier.badge}</span>
+    <h3>${L.t}</h3><div class="m-meta">⏱ ${L.m} min · +60 XP · Interactive lesson</div>
+    <div class="teach">${L.teach.map(p=>`<p>${p}</p>`).join("")}</div>
+    <div class="m-q"><div class="qq">🧠 Check your understanding: ${L.q}</div>
+      <div class="m-opts">${L.o.map((o,i)=>`<button class="m-opt" data-i="${i}">${o}</button>`).join("")}</div>
+      <div class="m-fb" id="mFb"></div></div>
+    <div class="m-foot">${L.chat?`<button class="btn sub" id="mChat">Ask the tutor 💬</button>`:""}<button class="btn sub" id="mClose">Close</button></div>`;
+  $("#modalWrap").classList.add("show");
+  box.querySelectorAll(".m-opt").forEach(btn=>btn.addEventListener("click",()=>{
+    const i=+btn.dataset.i;
+    if(i===L.a){
+      box.querySelectorAll(".m-opt").forEach(b=>b.disabled=true);
+      btn.classList.add("right");sfx.ok();
+      const fb=$("#mFb");fb.className="m-fb show";
+      fb.innerHTML=`✅ <b>Correct!</b> ${L.why}`;
+      if(!progress.lessons[id]){progress.lessons[id]=true;saveProg();addXP(60,`Lesson complete — ${L.t}`);}
+      else toast("Already completed ✓","Nice revision session!");
+      updateProgress();
+    }else{btn.classList.add("wrong");sfx.err();setTimeout(()=>btn.classList.remove("wrong"),450);
+      const fb=$("#mFb");fb.className="m-fb show";fb.innerHTML="🔍 Not quite — re-read the lesson and try again.";
+      speak("Not quite. Read the lesson once more and try again.",{});
+    }
+  }));
+  const mc=$("#mChat");if(mc)mc.addEventListener("click",()=>{closeModal();switchTab("chat");setTimeout(()=>startTopicByKey(L.chat),250);});
+  $("#mClose").addEventListener("click",closeModal);
+}
+function closeModal(){$("#modalWrap").classList.remove("show");}
+$("#modalWrap").addEventListener("click",e=>{if(e.target.id==="modalWrap")closeModal();});
 
-        // --- Socratic Chat Logic ---
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
+/* ---------- SOCRATIC CHAT ---------- */
+const TOPICS={
+calculate:{name:"CALCULATE",match:/calculate/,intro:"CALCULATE — the engine room of DAX. Let's build intuition together rather than memorizing syntax.",steps:[
+ {q:"First: in your own words, what does CALCULATE change about an expression?",accept:/(filter|context|lens|override|modif|change|environment)/,nudge:"Think lenses: does CALCULATE change the arithmetic, or the filter context the arithmetic sees?"},
+ {q:"Exactly — it reshapes the filter context. Now: what does CALCULATE(SUM(Sales[Amount]), Sales[Region]=\"East\") return?",accept:/(east)/,nudge:"The second argument is a filter. Which rows survive it?"},
+ {q:"Last one: a page slicer already filters to 'West', but your measure adds Sales[Region]=\"East\". Which region wins?",accept:/(east|measure|argument|override|calc)/,nudge:"CALCULATE's filter arguments override conflicting existing filters. So who wins?"}],
+ wrap:"You've earned it: CALCULATE evaluates expressions in a modified filter context, and its own filter arguments override conflicting context. That one insight unlocks most of DAX. Ready for its quiet partner — 'Row Context'?",next:"rowcontext"},
+rowcontext:{name:"Row Context",match:/(row context|sumx|iterator)/,intro:"Row context — DAX's close-up lens. Let's discover what it really sees.",steps:[
+ {q:"When SUMX(Sales, ...) runs, what does the inner expression see during each iteration?",accept:/(one row|single row|a row|each row|record|current row)/,nudge:"X-functions iterate a table. During one pass, how many rows are visible?"},
+ {q:"Right — one row at a time. Quick one: calculated columns get a context automatically at refresh. Which one — row or filter?",accept:/\brow\b/,nudge:"Columns are computed row-by-row during refresh…"}],
+ wrap:"Row context = 'the current row'. Pro insight: by itself it doesn't filter other tables — you need CALCULATE to turn row context into filter context (context transition). That's interview-level knowledge. 💪 Try 'CALCULATE' next if you haven't.",next:"calculate"},
+star:{name:"Star Schema",match:/(star schema|fact table|dimension|schema)/,intro:"Star schema — the shape that makes Power BI sing. Let's reason it out.",steps:[
+ {q:"In a star schema, which kind of table holds the numbers you measure — fact or dimension?",accept:/fact/,nudge:"Think of events with numbers: sales, clicks, shipments…"},
+ {q:"Correct. Now the big one: why does a star beat one giant flat table? Any reason counts.",accept:/(performance|speed|simpl|read|reuse|filter|maintain|flexib|duplic|storage)/,nudge:"Think about duplicated text, relationship clarity, and how filters flow…"}],
+ wrap:"Nailed the essentials: facts hold measurable events, dimensions describe them, 1-to-many relationships keep filter flow simple, fast, and unambiguous. Flat tables work — until they don't. Want the mechanics of that filter flow? Try 'CALCULATE'.",next:"calculate"},
+time:{name:"Time Intelligence",match:/(time intelligence|ytd|sameperiodlastyear|date table)/,intro:"Time intelligence — where DAX feels like magic, if the foundations are right.",steps:[
+ {q:"Before TOTALYTD works reliably, what must be true about your dates?",accept:/(date table|marked|contiguous|calendar)/,nudge:"There's a special table involved — and a 'Mark as date table' setting."},
+ {q:"Good. True or false: with Auto Date/Time on, Power BI quietly creates hidden date tables for every date column.",accept:/(true|yes|yep)/,nudge:"Auto Date/Time generates one behind the scenes… per date column. Handy, but heavy."}],
+ wrap:"That's the contract: a marked date table with contiguous dates, relationships from facts, and (in serious models) Auto Date/Time switched off. Break the contract and YTD returns blanks. Want to see how filters enable %-of-total? Try 'ALL & filter removal'.",next:"allfn"},
+msvc:{name:"Measures vs Columns",match:/(measure.*(column)|column.*(measure)|calculated column|measure vs)/,intro:"Measures vs calculated columns — the fork in the road every modeler faces.",steps:[
+ {q:"Which one is computed at query time and never stored row-by-row?",accept:/measure/,nudge:"One of them lives in the model and only computes when a visual asks."},
+ {q:"Sharp. Decision time: 'Revenue per customer' — measure or calculated column?",accept:/measure/,nudge:"It's a ratio of aggregates, and you want it to flex with slicers."}],
+ wrap:"Rule locked in: aggregations and ratios → measures (query-time, filter-aware). Per-row attributes you need to slice or filter by → calculated columns (stored, row-by-row). Next up: 'Row Context' shows where columns get their power.",next:"rowcontext"},
+rls:{name:"Row-Level Security",match:/(rls|row[- ]level security|row level)/,intro:"Row-Level Security — same report, different truths per viewer. Let's see how.",steps:[
+ {q:"RLS restricts rows, columns, or visuals?",accept:/\brows?\b/,nudge:"The name is the hint: Row-Level…"},
+ {q:"Exactly. Where in Desktop do you test what a given role actually sees before publishing?",accept:/(view as|view-as|test as role|modeling tab)/,nudge:"There's a 'View as' button on the Modeling tab."}],
+ wrap:"You've got the full loop: define roles with DAX table filters → add members in the Service → always validate with 'View as' first. Security done right is invisible to users. Curious about speed? Try 'Performance'.",next:"perf"},
+perf:{name:"Performance",match:/(performance|slow|optimi[sz]|speed)/,intro:"Performance work is detective work. Let's build your investigation kit.",steps:[
+ {q:"A visual takes 8 seconds. Which built-in tool breaks down exactly why?",accept:/(performance analyzer|analyzer)/,nudge:"It lives on the View tab and records durations per visual."},
+ {q:"Nice. If DAX time is tiny but the query/'other' time is huge, where does the problem likely live?",accept:/(directquery|source|network|query|gateway|sql|server|fold)/,nudge:"The query itself may be slow at the source — or losing query folding."}],
+ wrap:"The method: measure with Performance Analyzer → isolate the biggest slice (DAX vs query vs render) → fix that first. Most 'slow report' tickets die right there. For model-level speedups, try 'Star Schema'.",next:"star"},
+allfn:{name:"ALL & filter removal",match:/(remove.*filter|clear.*filter|\ball\(|percent.*total|% *of)/,intro:"ALL — the function that clears the room so you can see the whole picture.",steps:[
+ {q:"ALL('Table') removes what from that table?",accept:/(filters?|filter context)/,nudge:"It returns the whole table, ignoring something. What is that something?"},
+ {q:"Right — filters vanish. Classic pattern: DIVIDE([Sales], CALCULATE([Sales], ALL(Sales))) computes what?",accept:/(percent|percentage|%|share|of total|grand total)/,nudge:"The denominator ignores filters; the numerator keeps them. Their ratio is…"}],
+ wrap:"You've derived the % -of-total pattern from first principles: filtered value ÷ unfiltered value. ALLSELECTED is its sibling — it clears row/page filters but keeps visual-level ones. Compare the two and you'll never mix them up. Next: 'Time Intelligence' uses the same idea.",next:"time"}};
+const FALLBACKS=[
+"Interesting — before I answer, tell me: what do you already suspect is happening?",
+"Let's slow down. If you had to explain this to a colleague in one sentence, what would you say?",
+"Good question. Which part feels fuzziest — the concept, the syntax, or when to use it?",
+"I could tell you… but you'll remember it better if you discover it. What's your first hypothesis?",
+"Pick any topic chip below and I'll walk you through it Socratically — question by question."];
+let fbIdx=0;
+const chatState={topic:null,step:0};
+function bubble(who){
+  const d=document.createElement("div");d.className="bubble "+who;
+  d.innerHTML=`<div class="avatar">${who==="tutor"?"🎓":"🧑‍💻"}</div><div class="msg"></div>`;
+  $("#chatScroll").appendChild(d);
+  if(settings.autoScroll)$("#chatScroll").scrollTop=$("#chatScroll").scrollHeight;
+  return d.querySelector(".msg");
+}
+async function tutorSay(text,{doSpeak=true}={}){
+  const el=bubble("tutor");
+  const useWords=settings.highlight&&doSpeak;
+  await typeInto(el,text,useWords?"words":settings.reveal);
+  if(useWords&&doSpeak&&interacted&&settings.autoSpeak)speak(text,{boundaryCb:ci=>highlightAt(el,ci)});
+  else if(!useWords&&doSpeak&&interacted&&settings.autoSpeak)speak(text,{});
+  if(settings.autoScroll)$("#chatScroll").scrollTop=$("#chatScroll").scrollHeight;
+}
+function detectTopic(t){for(const k in TOPICS)if(TOPICS[k].match.test(t))return k;return null;}
+async function startTopicByKey(key){
+  const T=TOPICS[key];if(!T)return;
+  chatState.topic=key;chatState.step=0;
+  await tutorSay(T.intro,{doSpeak:true});
+  setTimeout(async()=>await tutorSay("❓ "+T.steps[0].q),700);
+}
+async function handleChat(raw){
+  const text=raw.trim();if(!text)return;
+  $("#chatIn").value="";bubble("user").textContent=text;sfx.pop();
+  const low=text.toLowerCase();
+  if(chatState.topic){
+    const T=TOPICS[chatState.topic],st=T.steps[chatState.step];
+    if(st.accept.test(low)){
+      chatState.step++;sfx.ok();
+      if(chatState.step>=T.steps.length){
+        await tutorSay("✅ "+T.wrap);addXP(15,"Socratic insight — "+T.name);chatState.topic=null;
+      }else{await tutorSay("Exactly right. Deeper we go —");setTimeout(async()=>await tutorSay("❓ "+T.steps[chatState.step].q),650);}
+    }else{await tutorSay("🤔 "+st.nudge);}
+    return;
+  }
+  if(/^(hi|hello|hey|yo)\b/.test(low)){await tutorSay("Hey there! 👋 Pick any concept — CALCULATE, Row Context, Star Schema — and I'll guide you to the answer instead of handing it over.");return;}
+  if(/thank/.test(low)){await tutorSay("Anytime! That curiosity is exactly how great modelers are made. What's next?");return;}
+  const key=detectTopic(low);
+  if(key){await startTopicByKey(key);return;}
+  await tutorSay(FALLBACKS[fbIdx++%FALLBACKS.length]);
+}
+function initChat(){
+  ["CALCULATE","Row Context","Star Schema","Time Intelligence","Measures vs Columns","RLS","Performance","ALL & filter removal"].forEach(label=>{
+    const key=detectTopic(label.toLowerCase())||Object.keys(TOPICS).find(k=>TOPICS[k].name===label);
+    const c=document.createElement("button");c.className="chip";c.textContent=label;
+    c.addEventListener("click",()=>{sfx.click();startTopicByKey(key);});
+    $("#chatChips").appendChild(c);
+  });
+  tutorSay("👋 Welcome! I'm your Power BI AI Tutor. Instead of just giving you answers, I'm going to help you discover them. What concept are we tackling today? (e.g., CALCULATE, Row Context, Star Schema)",{doSpeak:false});
+  $("#chatSend").addEventListener("click",()=>handleChat($("#chatIn").value));
+  $("#chatIn").addEventListener("keydown",e=>{if(e.key==="Enter")handleChat($("#chatIn").value);});
+  $("#stopSpeak").addEventListener("click",()=>{stopSpeech();toast("Speech stopped");});
+}
 
-        const socraticResponses = {
-            'calculate': "Great choice! `CALCULATE` is the most powerful function in DAX. Before I explain how it works, can you tell me: what is the difference between a *Filter Context* and a *Row Context*?",
-            'filter': "Exactly! Filter context is the set of filters applied to the data before the calculation happens. Now, based on that, what do you think the first argument of `CALCULATE` does compared to the subsequent arguments?",
-            'context': "You're getting close! Think about a visual on a report. When you click a bar in a chart, what happens to the data behind the scenes? That's your context changing.",
-            'relationship': "Relationships are how tables talk to each other. If I asked you to describe a 1-to-many relationship using a real-world example (like customers and orders), what would you say?",
-            'default': "That's an interesting thought! Let's break it down. If you had to explain this concept to a 5-year-old using a bucket of apples, how would you describe it?"
-        };
+/* ---------- DAX PLAYGROUND ---------- */
+const CHALLENGES=[
+ {name:"Total Sales",goal:"Write a measure that sums <b>Sales[Amount]</b>.",sk:"Total Sales =\nSUM(Sales[Amount])",hints:["Which aggregation function adds up every row of a column?","Point it at the column: SUM(TableName[ColumnName]).","Full form: Total Sales = SUM(Sales[Amount])"]},
+ {name:"Sales YTD",goal:"Accumulate sales year-to-date using a Date table.",sk:"Sales YTD =\nTOTALYTD(SUM(Sales[Amount]), 'Date'[Date])",hints:["There's a function literally called TOTALYTD.","It needs two things: the expression, and a date column.","TOTALYTD(SUM(Sales[Amount]), 'Date'[Date]) — and your date table must be marked."]},
+ {name:"% of Grand Total",goal:"Show each slice's share of total sales.",sk:"Pct of Total =\nDIVIDE(\n    SUM(Sales[Amount]),\n    CALCULATE(SUM(Sales[Amount]), ALL(Sales))\n)",hints:["Numerator keeps filters; denominator must ignore them.","ALL(Sales) strips every filter from the Sales table.","Wrap the division in DIVIDE( , ) for zero-safety."]},
+ {name:"Prior Year Sales",goal:"Shift the current filter context back exactly one year.",sk:"Sales PY =\nCALCULATE(\n    [Total Sales],\n    SAMEPERIODLASTYEAR('Date'[Date])\n)",hints:["CALCULATE can shift dates with a time-intelligence function.","SAMEPERIODLASTYEAR takes a date column.","CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date'[Date]))"]}];
+let chalIdx=progress.lastChallenge||0,hintIdx=0;
+function setChallenge(i){
+  chalIdx=i;hintIdx=0;progress.lastChallenge=i;saveProg();
+  const C=CHALLENGES[i];
+  $$("#daxChips .chip").forEach((c,ci)=>c.style.borderColor=ci===i?"var(--accent)":"");
+  $("#chalGoal").innerHTML="🎯 "+C.goal;
+  $("#daxIn").value=C.sk;progress.daxDraft=C.sk;saveProg();
+}
+function initDax(){
+  CHALLENGES.forEach((C,i)=>{const c=document.createElement("button");c.className="chip";c.textContent=C.name;
+    c.addEventListener("click",()=>{sfx.click();setChallenge(i);});$("#daxChips").appendChild(c);});
+  setChallenge(chalIdx);
+  if(progress.daxDraft)$("#daxIn").value=progress.daxDraft;
+  $("#daxIn").addEventListener("input",e=>{progress.daxDraft=e.target.value;saveProg();});
+  $("#daxIn").addEventListener("keydown",e=>{
+    if(e.key==="Tab"){e.preventDefault();const t=e.target,s=t.selectionStart;
+      t.value=t.value.slice(0,s)+"    "+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=s+4;}
+  });
+  $("#daxEval").addEventListener("click",evaluateDax);
+  $("#daxHint").addEventListener("click",()=>{
+    const C=CHALLENGES[chalIdx];
+    const h=C.hints[Math.min(hintIdx,C.hints.length-1)];hintIdx++;
+    addLog({hint:true,text:`Hint ${Math.min(hintIdx,C.hints.length)}/${C.hints.length}: ${h}`});
+    speak(h,{});sfx.pop();
+  });
+}
+function evaluateDax(){
+  const src=$("#daxIn").value.trim();
+  if(!src){toast("Write some DAX first ✍️");return;}
+  const items=[];let score=100;
+  const open=(src.match(/\(/g)||[]).length,close=(src.match(/\)/g)||[]).length;
+  if(open!==close){items.push(["err",`Unbalanced parentheses — ${open} open vs ${close} close.`]);score-=30;}
+  else items.push(["ok","Parentheses are balanced."]);
+  const ob=(src.match(/\[/g)||[]).length,cb=(src.match(/\]/g)||[]).length;
+  if(ob!==cb){items.push(["err","Unbalanced [column] brackets."]);score-=20;}
+  if((src.match(/"/g)||[]).length%2){items.push(["err","Unmatched quotation marks."]);score-=20;}
+  if(!/=/.test(src)){items.push(["warn","No '=' found — measures usually start with Measure Name = expression."]);score-=10;}
+  if(/\//.test(src)&&!/DIVIDE\s*\(/i.test(src)){items.push(["warn","Raw '/' division detected — use DIVIDE(a, b) to survive zero denominators."]);score-=10;}
+  const ifs=(src.match(/\bIF\s*\(/gi)||[]).length;
+  if(ifs>=3){items.push(["warn",`${ifs} nested IFs — consider SWITCH(TRUE(), ...) for readability.`]);score-=8;}
+  if(/\bVAR\b/i.test(src)&&/\bRETURN\b/i.test(src))items.push(["ok","Great use of VAR / RETURN — readable and efficient."]);
+  else if(/\bVAR\b/i.test(src)){items.push(["err","VAR declared without RETURN."]);score-=15;}
+  if(/\bALL\s*\(/i.test(src))items.push(["tip","ALL detected — you're removing filters. Double-check that's intentional."]);
+  if(/(TOTALYTD|SAMEPERIODLASTYEAR|DATESYTD|DATEADD)/i.test(src))items.push(["tip","Time intelligence in play — confirm your Date table is marked and contiguous."]);
+  if(/\bCALCULATE\s*\(/i.test(src))items.push(["ok","CALCULATE used — remember its filter arguments override existing context."]);
+  const qualified=(src.match(/\w+\s*\[[^\]]+\]/g)||[]).length;
+  const stripped=src.replace(/\w+\s*\[[^\]]+\]/g,"");
+  if(/\[[^\]]+\]/.test(stripped)&&qualified===0){items.push(["warn","Column reference without a table prefix — 'Sales[Amount]' beats '[Amount]'."]);score-=8;}
+  else if(qualified>0)items.push(["ok","Columns are table-qualified — unambiguous and professional."]);
+  score=clamp(score,5,100);
+  const grade=score>=90?"A":score>=75?"B":score>=60?"C":"D";
+  addLog({grade,score,items});
+  const verdict=grade==="A"?"Grade A — excellent work!":grade==="B"?"Grade B — solid, a couple of refinements.":grade==="C"?"Grade C — functional, but let's tighten it up.":"Grade D — let's fix the errors together.";
+  speak(verdict,{});
+  if(grade==="A")addXP(15,"DAX graded A");else if(grade==="B")addXP(8,"DAX graded B");
+  grade==="A"?sfx.ok():grade==="D"?sfx.err():sfx.pop();
+}
+function addLog(e){
+  const empty=$("#logEmpty");if(empty)empty.remove();
+  const d=document.createElement("div");d.className="log-entry"+(e.hint?" hint":"");
+  const time=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  if(e.hint){d.innerHTML=`<div class="log-top"><span class="log-time">${time}</span><span style="font-size:.78rem;font-weight:700;color:var(--accent)">💡 HINT</span></div><ul><li class="tip">${e.text}</li></ul>`;}
+  else{d.innerHTML=`<div class="log-top"><span class="log-time">${time}</span><span class="grade g${e.grade}">${e.grade}</span><span class="log-score">${e.score}/100</span></div><ul>${e.items.map(i=>`<li class="${i[0]}">${i[1]}</li>`).join("")}</ul>`;}
+  $("#daxLog").prepend(d);
+}
 
-        function formatMarkdown(text) {
-            return text.replace(/`([^`]+)`/g, '<code style="background:#e1dfdd; color:#d13438; padding:2px 5px; border-radius:4px; font-family:Consolas,monospace; font-size:0.9em;">$1</code>')
-                       .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
-                       .replace(/\*([^*]+)\*/g, '<i>$1</i>');
-        }
+/* ---------- TROUBLESHOOTING LAB ---------- */
+const CASES=[
+ {title:"The Disappearing Revenue",story:"The CFO is pacing. The revenue matrix shows healthy totals… but the instant anyone slices by Product Category, every number turns blank. No errors. No warning. Just emptiness where money should be.",
+  clues:["The Category column comes from a separate Products table, related to Sales.","In Model view, the line between Products[ProductKey] and Sales[ProductKey] looks different from the others — thinner, almost transparent.","The measure renders perfectly in a card visual with no slicers involved."],
+  opts:[["The measure has a syntax error that only triggers inside tables.",false,"If syntax were broken, the card visual would fail too — but it works fine."],
+        ["The relationship between Products and Sales is inactive, so filters can't flow.",true,"Bingo. Inactive (dotted-line) relationships don't propagate filters — the slicer filters Products, but Sales never hears about it, so the intersection comes back blank. Activate the relationship, or use USERELATIONSHIP() inside the measure for role-playing scenarios."],
+        ["The revenue values are NULL in the source data for those categories.",false,"NULLs in the source wouldn't care which column you slice by — and the total is healthy."],
+        ["The slicer needs to be reformatted to the correct data type.",false,"Slicer formatting changes looks, not blank results."]],
+  debrief:"Lesson learned: blank-when-sliced almost always means broken filter flow — check relationship status, direction, and key matches first."},
+ {title:"The Double-Counted Headcount",story:"HR's new dashboard reports 3,400 employees. Finance says payroll has 2,100 people. Both teams are very calm and very certain. Someone is counting something twice.",
+  clues:["Employees can transfer between departments during the year, and history is kept.","The model relates Employee records to a Department table, and a flag in the relationship settings shows arrows pointing both ways.","COUNTROWS(Employees) in a card shows 2,100 — yet summing the per-department rows yields 3,400."],
+  opts:[["The data was loaded twice by a faulty refresh.",false,"A duplicate load would inflate the card visual too — but COUNTROWS shows the true 2,100."],
+        ["Employees with transfer history appear once per department, so per-department rows legitimately re-count them.",true,"Correct. With movement history, one person can belong to several department rows. The 'total' of per-department counts is not a headcount — it's assignment-counts. Decide the business question (current snapshot? distinct people?) and model accordingly — a snapshot date or DISTINCTCOUNT of employee keys usually resolves it."],
+        ["The bidirectional flag corrupts aggregate functions.",false,"Bidirectionality can cause ambiguity and odd filter behavior, but it doesn't corrupt COUNTROWS itself."],
+        ["The visual is using the wrong summary function and must be switched to Average.",false,"Averaging department counts wouldn't give the true headcount either — it would just hide the problem differently."]],
+  debrief:"Lesson learned: when detail rows disagree with totals, ask what one row means. Granularity mismatches masquerade as 'wrong numbers'."},
+ {title:"The Timeless Trend",story:"A lovely line chart of monthly sales — until you add last year's comparison. SAMEPERIODLASTYEAR returns blank for some months, strange values for others, and January is suspiciously identical to December.",
+  clues:["A Date table exists in the model, but nobody remembers marking it as the official date table.","Auto Date/Time is still switched on, generating hidden date tables behind the scenes.","The Sales table has three date columns: OrderDate, ShipDate, and DueDate."],
+  opts:[["The source data is genuinely missing those months.",false,"If data were missing, the current-year line would show gaps too — it doesn't."],
+        ["Time zones are shifting the dates across month boundaries.",false,"Power BI date tables don't apply time-zone drift like this."],
+        ["Without a marked, contiguous date table — and with Auto Date/Time adding hidden tables — time intelligence has no reliable spine to walk.",true,"Exactly. TOTALYTD / SAMEPERIODLASTYEAR traverse the date table; if it's unmarked, gappy, or competing with hidden auto-tables (and three ambiguous date relationships), results become unpredictable. Fix: one marked date table, contiguous dates, Auto Date/Time off, one active relationship per fact date."],
+        ["The line chart visual doesn't support comparison functions.",false,"Visuals don't compute DAX — the measure does, and any visual can display it."]],
+  debrief:"Lesson learned: time intelligence is only as good as the date table behind it. Mark it, keep it contiguous, and silence Auto Date/Time."}];
+let caseIdx=0,shownClues=0,answered=false;
+function renderCase(){
+  const C=CASES[caseIdx];shownClues=1;answered=false;
+  $("#caseNo").textContent=`CASE FILE #${caseIdx+1}`;
+  $("#caseTitle").textContent=`🕵️ Scenario ${caseIdx+1}: ${C.title}`;
+  $("#caseStory").textContent=C.story;
+  renderClues();
+  const opts=$("#caseOpts");opts.innerHTML="";
+  C.opts.forEach((o,i)=>{
+    const b=document.createElement("button");b.className="opt";b.textContent=o[0];
+    b.addEventListener("click",()=>pickCase(i,b));opts.appendChild(b);
+  });
+  $("#caseFb").className="case-feedback";$("#caseFb").innerHTML="";
+  const sc=progress.scenarios[caseIdx]||{confidence:50};
+  $("#confSlide").value=sc.confidence??50;$("#confVal").textContent=($("#confSlide").value)+"%";
+}
+function renderClues(){
+  const C=CASES[caseIdx];const wrap=$("#caseClues");wrap.innerHTML="";
+  for(let i=0;i<shownClues;i++){
+    const d=document.createElement("div");d.className="clue";
+    d.innerHTML=`<b>Clue ${i+1}</b><span>${C.clues[i]}</span>`;wrap.appendChild(d);
+  }
+  $("#revealClue").style.display=shownClues<C.clues.length?"":"none";
+  $("#revealClue").textContent=`🔍 Reveal next clue (${shownClues}/${C.clues.length})`;
+}
+function pickCase(i,btn){
+  if(answered)return;
+  const C=CASES[caseIdx],o=C.opts[i];
+  if(o[1]){
+    answered=true;btn.classList.add("right");sfx.ok();
+    const first=!progress.scenarios[caseIdx]?.solved;
+    progress.scenarios[caseIdx]={...(progress.scenarios[caseIdx]||{}),solved:true};saveProg();
+    const conf=+$("#confSlide").value;
+    const fb=$("#caseFb");fb.className="case-feedback good show";
+    fb.innerHTML=`✅ <b>Diagnosis confirmed.</b> ${o[2]}<br><br><i>${C.debrief}</i>${conf>=80?"<br><br>😎 Confidence "+conf+"% — fully justified.":conf<=30?"<br><br>📈 Confidence was only "+conf+"% — trust yourself more next time!":""}`;
+    if(first)addXP(50,"Case solved — "+C.title);else toast("Case already solved ✓","Great re-investigation!");
+    speak("Diagnosis confirmed. "+o[2],{});
+  }else{
+    btn.classList.add("wrong");btn.disabled=true;sfx.err();
+    const fb=$("#caseFb");fb.className="case-feedback bad show";
+    fb.innerHTML=`❌ <b>${o[2]}</b><br>Review the clues and try another hypothesis.`;
+  }
+}
+function initLab(){
+  $("#revealClue").addEventListener("click",()=>{shownClues++;renderClues();sfx.pop();});
+  $("#nextCase").addEventListener("click",()=>{caseIdx=(caseIdx+1)%CASES.length;renderCase();sfx.tab();});
+  $("#confSlide").addEventListener("input",e=>{
+    $("#confVal").textContent=e.target.value+"%";
+    progress.scenarios[caseIdx]={...(progress.scenarios[caseIdx]||{}),confidence:+e.target.value};saveProg();
+  });
+  renderCase();
+}
 
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
+/* ---------- SETTINGS UI ---------- */
+function buildVoices(filter=""){
+  const list=$("#voiceList");list.innerHTML="";
+  VOICES.forEach((v,i)=>{
+    if(filter&&!(v[0].toLowerCase().includes(filter)||v[1].toLowerCase().includes(filter)))return;
+    const r=document.createElement("div");r.className="voice-row"+(i===settings.voice?" on":"");
+    r.innerHTML=`<div><div class="vn">${i+1}. ${v[0]}</div><div class="vs">${v[1]}</div></div><button class="pv" title="Preview">▶</button>`;
+    r.addEventListener("click",()=>{settings.voice=i;saveSet();applySettings();sfx.click();});
+    r.querySelector(".pv").addEventListener("click",ev=>{ev.stopPropagation();previewVoice(i);});
+    list.appendChild(r);
+  });
+}
+function previewVoice(i){
+  const v=VOICES[i];
+  if(!hasTTS){toast("Speech not supported","This browser has no TTS engine.");return;}
+  const keep=settings.voice;settings.voice=i;
+  speak(`Hello! I'm ${v[0]}, your ${v[1].toLowerCase()} Power BI tutor. Let's master CALCULATE together.`);
+  settings.voice=keep;
+}
+function buildThemes(){
+  const g=$("#themeGrid");g.innerHTML="";
+  THEMES.forEach(([key,name,bg,ac])=>{
+    const b=document.createElement("button");b.className="theme-btn"+(settings.theme===key?" on":"");
+    b.innerHTML=`<span class="swatch" style="background:linear-gradient(135deg,${bg} 50%,${ac} 50%)"></span>${name}`;
+    b.addEventListener("click",()=>{settings.theme=key;saveSet();applySettings();buildThemes();sfx.click();
+      toast(`Theme: ${name}`);});
+    g.appendChild(b);
+  });
+}
+function applySettings(){
+  document.documentElement.dataset.theme=settings.theme;
+  document.documentElement.style.fontSize=settings.fontScale+"%";
+  document.body.classList.toggle("density-compact",settings.density==="compact");
+  document.body.classList.toggle("reduce-motion",settings.reduceMotion);
+  $("#tAutoSpeak").checked=settings.autoSpeak;$("#tHighlight").checked=settings.highlight;
+  $("#tAutoScroll").checked=settings.autoScroll;$("#tInterrupt").checked=settings.interrupt;
+  $("#tMotion").checked=settings.reduceMotion;$("#tSounds").checked=settings.sounds;
+  $("#volRange").value=settings.volume;$("#speedRange").value=settings.speedIdx+1;
+  const sp=SPEEDS[settings.speedIdx];$("#speedVal").textContent=sp.toFixed(2).replace(/\.?0+$/,"")+"×";
+  $("#speedDesc").textContent=sp<0.85?"Relaxed — great for learning new concepts.":sp<=1.15?"Natural pace — how most tutors speak.":"Brisk — for review sessions and power users.";
+  $$("#segReveal button").forEach(b=>b.classList.toggle("on",b.dataset.v===settings.reveal));
+  $$("#segDensity button").forEach(b=>b.classList.toggle("on",b.dataset.v===settings.density));
+  $$("#segFont button").forEach(b=>b.classList.toggle("on",+b.dataset.v===settings.fontScale));
+  const v=VOICES[settings.voice];$("#selVoiceName").textContent=v?v[0]:"—";
+  $$(".voice-row").forEach((r,i)=>r.classList.toggle("on",i===settings.voice));
+}
+function initSettings(){
+  buildVoices();buildThemes();
+  $("#voiceSearch").addEventListener("input",e=>buildVoices(e.target.value.toLowerCase().trim()));
+  $("#voicePrev").addEventListener("click",()=>previewVoice(settings.voice));
+  $("#volRange").addEventListener("input",e=>{settings.volume=+e.target.value;saveSet();});
+  $("#speedRange").addEventListener("input",e=>{settings.speedIdx=+e.target.value-1;saveSet();applySettings();});
+  const seg=(id,key,cast)=>$$(id+" button").forEach(b=>b.addEventListener("click",()=>{
+    settings[key]=cast?cast(b.dataset.v):b.dataset.v;saveSet();applySettings();sfx.click();}));
+  seg("#segReveal","reveal");seg("#segDensity","density");seg("#segFont","fontScale",Number);
+  const tog=(id,key)=>$(id).addEventListener("change",e=>{settings[key]=e.target.checked;saveSet();applySettings();});
+  tog("#tAutoSpeak","autoSpeak");tog("#tHighlight","highlight");tog("#tAutoScroll","autoScroll");
+  tog("#tInterrupt","interrupt");tog("#tMotion","reduceMotion");tog("#tSounds","sounds");
+  $("#btnExport").addEventListener("click",()=>{
+    const blob=new Blob([JSON.stringify({settings,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="pbai-tutor-settings.json";a.click();
+    toast("Settings exported ⬇");
+  });
+  $("#btnImport").addEventListener("click",()=>$("#importFile").click());
+  $("#importFile").addEventListener("change",e=>{
+    const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=()=>{try{const data=JSON.parse(rd.result);
+      if(data.settings){settings={...DEF_SETTINGS,...data.settings};saveSet();applySettings();buildVoices();buildThemes();toast("Settings imported ⬆");}
+      else toast("Invalid file","No settings found.");}catch(err){toast("Import failed","That file isn't valid JSON.");}};
+    rd.readAsText(f);e.target.value="";
+  });
+  $("#btnResetSet").addEventListener("click",()=>{if(confirm("Reset all settings to defaults?")){settings={...DEF_SETTINGS};saveSet();applySettings();buildVoices();buildThemes();toast("Settings reset");}});
+  $("#btnResetProg2").addEventListener("click",resetProgress);
+  $$(".acc-head").forEach(h=>h.addEventListener("click",()=>{h.parentElement.classList.toggle("open");sfx.click();}));
+  $("#gearBtn").addEventListener("click",togglePanel);
+  $("#spClose").addEventListener("click",togglePanel);
+}
+function togglePanel(force){
+  const p=$("#settingsPanel");
+  const open=force!==undefined?force:!p.classList.contains("open");
+  p.classList.toggle("open",open);
+  if(open)$("#gearDot").style.display="none";
+}
+function resetProgress(){
+  if(!confirm("Reset all lessons, XP and solved cases?"))return;
+  progress={lessons:{},xp:0,scenarios:{},daxDraft:progress.daxDraft,lastChallenge:progress.lastChallenge};
+  saveProg();updateProgress();renderCase();toast("Progress reset","A fresh start. 🌱");
+}
+$("#resetProg").addEventListener("click",resetProgress);
 
-            appendMessage(text, 'user');
-            chatInput.value = '';
+/* ---------- TABS / GLOBAL ---------- */
+function switchTab(name){
+  $$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
+  ["path","chat","dax","lab"].forEach(k=>{
+    const s=$("#tab-"+k);s.hidden=k!==name;
+    if(k===name){s.classList.remove("tab-panel");void s.offsetWidth;s.classList.add("tab-panel");}
+  });
+  sfx.tab();
+}
+$$(".tab").forEach(t=>t.addEventListener("click",()=>switchTab(t.dataset.tab)));
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeModal();togglePanel(false);}
+  if((e.ctrlKey||e.metaKey)&&e.key===","){e.preventDefault();togglePanel();}
+});
 
-            setTimeout(() => {
-                let response = socraticResponses['default'];
-                const lowerText = text.toLowerCase();
-                
-                // Check for lesson-specific keywords
-                if (currentLessonTopic && lowerText.length > 5) {
-                    response = `Great thinking! Let me push you further on **${currentLessonTitle}**.<br><br>Based on what you just said, can you give me an example of how you'd apply this in a real business report? What problem would it solve?`;
-                } else {
-                    for (let key in socraticResponses) {
-                        if (lowerText.includes(key)) {
-                            response = socraticResponses[key];
-                            break;
-                        }
-                    }
-                }
-                appendMessage(response, 'ai');
-                updateProgress(3);
-            }, 800);
-        }
-
-        function appendMessage(text, sender) {
-            const msg = document.createElement('div');
-            msg.className = `message ${sender}`;
-            
-            if (sender === 'user') {
-                msg.innerText = text;
-            } else {
-                msg.innerHTML = formatMarkdown(text);
-            }
-            
-            chatMessages.appendChild(msg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Add a "Mark Complete" button dynamically when user is in a lesson
-        function addCompleteLessonButton() {
-            const inputArea = document.querySelector('.chat-input-area');
-            if (document.getElementById('completeLessonBtn')) return;
-            
-            const btn = document.createElement('button');
-            btn.id = 'completeLessonBtn';
-            btn.className = 'btn btn-success';
-            btn.innerText = '✓ Mark Complete';
-            btn.onclick = () => {
-                if (currentLessonId) {
-                    completedLessons.add(currentLessonId);
-                    renderCurriculum();
-                    updateProgress(10);
-                    appendMessage(`🎉 **Lesson marked complete!** Great work on *${currentLessonTitle}*. Head back to the **Learning Path** to continue your journey.`, 'ai');
-                    currentLessonId = '';
-                    btn.remove();
-                }
-            };
-            inputArea.appendChild(btn);
-        }
-
-        // Override startLesson to also add complete button
-        const originalStartLesson = startLesson;
-        startLesson = function(lesson) {
-            originalStartLesson(lesson);
-            setTimeout(addCompleteLessonButton, 100);
-        };
-
-        // --- DAX Sandbox Logic ---
-        function evaluateDAX() {
-            const code = document.getElementById('daxEditor').value;
-            const log = document.getElementById('outputLog');
-            log.innerHTML = '';
-
-            if (!code.trim()) {
-                addLog("⚠️ Please enter a DAX formula first.", "log-error");
-                return;
-            }
-
-            const lowerCode = code.toLowerCase();
-            
-            if (lowerCode.includes('calculate')) {
-                addLog("✅ CALCULATE detected.", "log-success");
-                addLog("🧠 <b>AI Analysis:</b> Good use of CALCULATE! Remember, the filter arguments must return a table or be boolean expressions. Did you remember to wrap your filter in FILTER() if it's complex?", "log-entry");
-                updateProgress(5);
-            } else if (lowerCode.includes('sumx') || lowerCode.includes('countrows') || lowerCode.includes('averagex')) {
-                addLog("✅ Iterator function detected.", "log-success");
-                addLog("🧠 <b>AI Analysis:</b> You're using an iterator! Remember that iterators create a Row Context. If you need to evaluate a measure inside this iterator, remember that Row Context does NOT automatically trigger Context Transition. You might need CALCULATE() inside your iterator.", "log-entry");
-                updateProgress(5);
-            } else if (lowerCode.includes('sum') && code.includes('[')) {
-                addLog("✅ Basic Aggregation detected.", "log-success");
-                addLog("🧠 <b>AI Analysis:</b> I see you are using SUM. Are you sure you want to sum the column directly? If you need to multiply Quantity * Price row-by-row first, consider using SUMX instead.", "log-entry");
-                updateProgress(5);
-            } else {
-                addLog("❌ I don't recognize standard DAX patterns here.", "log-error");
-                addLog("💡 <b>Hint:</b> Try starting with a measure name, an equals sign, and a function like SUM(), CALCULATE(), or COUNTROWS().", "log-entry");
-            }
-        }
-
-        function showHint() {
-            addLog("💡 <b>Hint:</b> A basic measure looks like this: <br><code>Total Sales = SUM('Sales'[Amount])</code>", "log-entry");
-        }
-
-        function addLog(text, className) {
-            const log = document.getElementById('outputLog');
-            const entry = document.createElement('div');
-            entry.className = `log-entry ${className}`;
-            entry.innerHTML = text;
-            log.appendChild(entry);
-            log.scrollTop = log.scrollHeight;
-        }
-
-        // --- Scenario Logic ---
-        const scenarios = [
-            {
-                title: "🕵️ Scenario 1: The Disappearing Revenue",
-                prompt: "<b>Context:</b> You built a report showing Total Revenue. The business users complain that when they slice by 'Region', the total at the bottom of the matrix doesn't match the sum of the rows. It's showing a much smaller number.<br><br><b>Question:</b> What is the most likely cause of this issue?",
-                choices: [
-                    { text: "A. The visual is using a Filter instead of a Slicer.", correct: false },
-                    { text: "B. There is a bi-directional cross-filter or inactive relationship causing context transition issues.", correct: true },
-                    { text: "C. The column is set to 'Don't Summarize' in the model.", correct: false }
-                ],
-                correctFeedback: "Bi-directional filtering or inactive relationships often cause context transition issues where filters don't propagate as expected, altering the grand total.",
-                incorrectFeedback: "If a visual is slicing correctly but the <b>Grand Total</b> is wrong, it usually means the <b>Filter Context</b> at the total row level is evaluating differently than the row level. Look into relationships and context transition!"
-            },
-            {
-                title: "🕵️ Scenario 2: The Blank Row Mystery",
-                prompt: "<b>Context:</b> You are analyzing Sales by Product Category. You notice a row in your matrix labeled '(Blank)' that contains a significant amount of sales data. Your data model has a strict 1-to-many relationship from Product to Sales.<br><br><b>Question:</b> What does the '(Blank)' row represent?",
-                choices: [
-                    { text: "A. Sales records that have a ProductID not found in the Product dimension table (Orphaned records).", correct: true },
-                    { text: "B. Products that have zero sales.", correct: false },
-                    { text: "C. A bug in the Power BI engine.", correct: false }
-                ],
-                correctFeedback: "Correct! The '(Blank)' row appears when there are orphaned records in the 'many' side of a relationship (e.g., Sales with a ProductID that doesn't exist in the Product table).",
-                incorrectFeedback: "The '(Blank)' row in a 1-to-many relationship indicates orphaned records—data on the 'many' side that doesn't have a matching key on the 'one' side."
-            }
-        ];
-
-        let currentScenarioIndex = 0;
-        const confidenceSlider = document.getElementById('confidenceSlider');
-        const confidenceValue = document.getElementById('confidenceValue');
-        
-        confidenceSlider.oninput = function() {
-            confidenceValue.innerText = this.value + '%';
-        };
-
-        function loadScenario() {
-            const scenario = scenarios[currentScenarioIndex];
-            document.getElementById('scenarioTitle').innerText = scenario.title;
-            document.getElementById('scenarioPrompt').innerHTML = scenario.prompt;
-            
-            const choicesContainer = document.getElementById('scenarioChoices');
-            choicesContainer.innerHTML = '';
-            
-            scenario.choices.forEach((choice, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'choice-btn';
-                btn.innerText = choice.text;
-                btn.onclick = () => checkAnswer(btn, choice.correct);
-                choicesContainer.appendChild(btn);
-            });
-
-            document.getElementById('feedbackBox').style.display = 'none';
-            document.getElementById('scenarioFooter').style.display = 'none';
-        }
-
-        function checkAnswer(btn, isCorrect) {
-            const scenario = scenarios[currentScenarioIndex];
-            const feedback = document.getElementById('feedbackBox');
-            const confidence = confidenceSlider.value;
-            
-            document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-                feedback.style.display = 'block';
-                feedback.style.background = '#dff6dd';
-                feedback.style.color = '#107C10';
-                feedback.innerHTML = `<b>🎉 Correct!</b> ${scenario.correctFeedback}<br><br><i>Confidence was: ${confidence}%. ${confidence < 50 ? "You knew it even though you weren't sure! Great intuition." : "Your confidence matched your knowledge perfectly."}</i>`;
-                updateProgress(10);
-            } else {
-                btn.classList.add('incorrect');
-                document.querySelectorAll('.choice-btn').forEach((b, i) => {
-                    if (scenarios[currentScenarioIndex].choices[i].correct) {
-                        b.classList.add('correct');
-                    }
-                });
-                
-                feedback.style.display = 'block';
-                feedback.style.background = '#fde7e9';
-                feedback.style.color = '#D13438';
-                feedback.innerHTML = `<b>❌ Not quite.</b> ${scenario.incorrectFeedback}`;
-            }
-            
-            document.getElementById('scenarioFooter').style.display = 'flex';
-        }
-
-        function nextScenario() {
-            currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
-            loadScenario();
-        }
-
-        loadScenario();
-
-        // --- Progress Tracking ---
-        let currentProgress = 0;
-        function updateProgress(amount) {
-            currentProgress = Math.min(100, currentProgress + amount);
-            document.getElementById('globalProgress').style.width = currentProgress + '%';
-            document.getElementById('progressText').innerText = `${currentProgress}% to Data Modeler`;
-            
-            if (currentProgress >= 100) {
-                document.getElementById('levelText').innerText = "Expert 🏆";
-            } else if (currentProgress >= 50) {
-                document.getElementById('levelText').innerText = "Intermediate 🚀";
-            } else if (currentProgress >= 20) {
-                document.getElementById('levelText').innerText = "Beginner+ 🌿";
-            }
-        }
-
-        function resetProgress() {
-            currentProgress = 0;
-            completedLessons.clear();
-            document.getElementById('globalProgress').style.width = '0%';
-            document.getElementById('levelText').innerText = "Beginner 🌱";
-            document.getElementById('progressText').innerText = "0% to Data Modeler";
-            renderCurriculum();
-        }
-
-        // Initialize curriculum on load
-        renderCurriculum();
-    </script>
+/* ---------- INIT ---------- */
+renderPath();initDax();initLab();initChat();initSettings();applySettings();updateProgress();
+toast("Workspace ready 🎓","24 lessons · Socratic chat · DAX coach · 3 case files");
+</script>
 </body>
 </html>
